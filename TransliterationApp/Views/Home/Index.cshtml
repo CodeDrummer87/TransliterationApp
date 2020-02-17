@@ -1,8 +1,62 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿
+@{
+    Layout = null;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/css/main.css" />
+    <link href="https://fonts.googleapis.com/css?family=Exo+2&display=swap" rel="stylesheet">
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <title>Перевод Транслитерации</title>
+</head>
+
+<body>
+    <header>
+        <p>settings?</p>
+        <h1>TRANSLATION TRANSLITERATION</h1>
+        <hr align="left" width="55%" />
+        <hr align="left" width="65%" />
+    </header>
+
+    <main>
+        <div class="parent">
+            <div class="left-block">
+                <h1>OriginaL</h1>
+                <textarea id="originalText" autofocus></textarea>
+                <button>Saved Texts</button>
+                <select size="1">
+                    <option selected disabled>Choose Transliteration System</option>
+                    <option>Add new transliteration system</option>
+                    <option>Delete transliteration system</option>
+                </select>
+                <button>Apply</button>
+                <button>Save Text</button>
+            </div>
+            <div class="right-block">
+                <h1>Translated</h1>
+                <textarea id="translatedText"></textarea>
+                <div class="right-block-options">
+                    <div class="current-system"><p>Current System: <span>Some System</span></p></div>
+                    <div class="buttons">
+                        <button>Download</button>
+                        <button>Save Text</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <hr align="right" width="65%" />
+        <hr align="right" width="55%" />
+        <p>Andrei Bodrov <img src="~/images/star87.png" /> Omsk-2020</p>
+    </footer>
+
+    <script src="~/js/main.js"></script>
+</body>
+</html>
