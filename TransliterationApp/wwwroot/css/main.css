@@ -102,6 +102,64 @@ span {
     color: #46ff04;
 }
 
+.nap {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    display: none;
+}
+
+.pop-up-saveSourceText {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 450px;
+    min-height: 300px;
+    background-color: #000000;
+    border: 3px inset #FFA900;
+    border-radius: 5%;
+    margin: 150px auto 0 auto;
+    z-index: 150;
+    transition: all 0.5s ease-in;
+    box-shadow: 0px 0px 7px 3px #FFC873;
+    display: none;
+}
+
+.pop-up-cancel {
+    padding: 12px 15px;
+    text-align: right;
+}
+
+.pop-up-cancel > span:hover {
+    color:  #D00019;
+}
+
+.pop-up-saveSourceText > input,
+.pop-up-saveSourceText > textarea {
+    width: 85%;
+    background-color: #FFC873;
+    outline: none;
+    border: none;
+    border-radius: 2%;
+    padding: 5px 7px;
+    font-family: 'Exo 2', sans-serif;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.pop-up-saveSourceText > textarea {
+    height: 70px;
+}
+
+.pop-up-saveSourceText > hr {
+    width: 75%;
+}
+
 img {
     width: 1%;
     height: 1%;
