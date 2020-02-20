@@ -1,5 +1,4 @@
 ﻿$(document).ready(function () {
-    var windowWidth = window.innerWidth;
     var windowHeight = window.innerHeight;
 
     let headerHeight = windowHeight / 9;
