@@ -20,6 +20,34 @@ $(document).ready(function () {
 
     $('.left-block').on('click', '#saveSourceText', function () {
         ShowNap('.pop-up-saveSourceText');
+        $('#inputSourceTextName').focus();
+    });
+
+    $('.pop-up-saveSourceText').on('click', '#saveSourceTextInDb', function () {
+
+        let sourceText = $('#originalText').val();
+        if (sourceText !== '') {
+
+            let textName = $('#inputSourceTextName').val();
+            if (textName !== '') {
+                var text = {
+                    TextName: textName,
+                    TextDescription: $('#inputSourceTextDescription').val(),
+                    TextContent: sourceText
+                };
+                SaveSourceTextInDb(text);
+
+                $('#inputSourceTextName').val('');
+                $('#inputSourceTextDescription').val('');
+            }
+            else {
+                alert("Name required");
+            }    
+        }
+        else {
+            alert("Nothing to save");
+            HideNap();
+        }
     });
 });
 
@@ -32,4 +60,14 @@ function ShowNap(modal) {
 function HideNap() {
     $(currentPopup).css('display', 'none');
     $('.nap').css('display', 'none');
+}
+
+function SaveSourceTextInDb(text) {
+    $.ajax({
+        url: "http://localhost:50860/sourcetext/post",
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(text),
+    });
+    HideNap();
 }

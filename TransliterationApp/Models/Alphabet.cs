@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,6 +8,7 @@ namespace TransliterationApp.Models
 {
     public class Alphabet
     {
+        [Key]
         public int SystemId { get; set; }
         public string SystemName { get; set; }
         public string RUS_A { get; set; }
