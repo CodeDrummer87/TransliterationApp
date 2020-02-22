@@ -24,7 +24,7 @@ namespace TransliterationApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]SourceText data)
+        public void Post([FromBody]SourceText data)
         {
             if (data != null)
             {
@@ -37,8 +37,6 @@ namespace TransliterationApp.Controllers
                 });
                 db.SaveChanges();
             }
-            
-            return View();
         }
     }
 }

@@ -31,11 +31,6 @@ namespace TransliterationApp
 
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<TransAppContext>(options => options.UseSqlServer(connection));
-
-            services.AddCors(options =>
-            {
-                options.AddPolicy("AllowAllOrigin", builder => builder.AllowAnyOrigin());
-            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -55,16 +50,7 @@ namespace TransliterationApp
 
             app.UseRouting();
 
-            //app.UseCors(options => options.AllowAnyOrigin());
-
             app.UseAuthorization();
-
-            //app.UseMvc(routes =>
-            //{
-            //    routes.MapRoute(
-            //        name: "default",
-            //        template: "{controller=Home}/{action=Index}/{id?}");
-            //});
 
             app.UseEndpoints(endpoints =>
             {

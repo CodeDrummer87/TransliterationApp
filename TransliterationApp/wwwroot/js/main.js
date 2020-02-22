@@ -68,6 +68,12 @@ function SaveSourceTextInDb(text) {
         method: "POST",
         contentType: "application/json",
         data: JSON.stringify(text),
+        success: function () {
+            $('.displayInfo').css('color','15D5DD').text(`.:: Text '${text.TextName}' saved successfully`);
+        },
+        error: function () {
+            $('.displayInfo').css('color', 'RED').text(`.:: Text '${text.TextName}' not saved`);
+        }
     });
     HideNap();
 }
