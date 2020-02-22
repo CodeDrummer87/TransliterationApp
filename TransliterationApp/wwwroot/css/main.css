@@ -95,7 +95,7 @@ select {
 .displayInfo {
     text-align: left;
     padding-left: 5.5%;
-    color: #15D5DD;
+    font-size: 1.1rem;
 }
 
 .right-block-options {

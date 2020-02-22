@@ -41,11 +41,12 @@ $(document).ready(function () {
                 $('#inputSourceTextDescription').val('');
             }
             else {
-                alert("Name required");
+                $('.displayInfo').css('color', 'RED').text(".:: Name required");
+                HideNap();
             }    
         }
         else {
-            alert("Nothing to save");
+            $('.displayInfo').css('color', 'RED').text(".:: Nothing to save");
             HideNap();
         }
     });
@@ -69,7 +70,7 @@ function SaveSourceTextInDb(text) {
         contentType: "application/json",
         data: JSON.stringify(text),
         success: function () {
-            $('.displayInfo').css('color','15D5DD').text(`.:: Text '${text.TextName}' saved successfully`);
+            $('.displayInfo').css('color','#15D5DD').text(`.:: Text '${text.TextName}' saved successfully`);
         },
         error: function () {
             $('.displayInfo').css('color', 'RED').text(`.:: Text '${text.TextName}' not saved`);
