@@ -18,7 +18,9 @@ $(document).ready(function () {
         HideNap();
     });
 
-    $('.left-block').on('click', '#saveSourceText', function () {
+    $('.left-block').on('click', '#loadSavedText', function () {
+        GetListSavedSourceTexts();
+    }).on('click', '#saveSourceText', function () {
         ShowNap('.pop-up-saveSourceText');
         $('#inputSourceTextName').focus();
     });
@@ -77,4 +79,18 @@ function SaveSourceTextInDb(text) {
         }
     });
     HideNap();
+}
+
+function GetListSavedSourceTexts() {
+    $.ajax({
+        url: "http://localhost:50860/sourceText/GetListSourceText",
+        method: "GET",
+        contentType: "application/json",
+        success: function (data) {
+            $('.displayInfo').css('color', '#15D5DD').text(".:: Source list uploaded");
+        },
+        error: function () {
+            $('.displayInfo').css('color', 'red').text(".:: Error loading source list");
+        }
+    });
 }
