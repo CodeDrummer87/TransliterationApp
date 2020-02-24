@@ -13,7 +13,6 @@ namespace TransliterationApp.Controllers
     {
         public TransAppContext db;
 
-        private static List<string> sourceTextName = new List<string>();
         public SourceTextController(TransAppContext context)
         {
             db = context;

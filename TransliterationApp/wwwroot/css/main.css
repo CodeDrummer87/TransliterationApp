@@ -11,12 +11,18 @@
 h1, p {
     margin: 2px;
 }
+
 header {
     padding: 0px 30px 0px 12px;
 }
 
 header > p {
     text-align: right;  
+}
+
+button > title {
+    background-color: #FFC873;
+    border-radius: 0.8%;
 }
 
 .parent {
@@ -122,6 +128,7 @@ span {
     right: 0;
     bottom: 0;
     z-index: 100;
+    overflow: auto;
     display: none;
 }
 
@@ -130,8 +137,6 @@ span {
     top: 0;
     left: 0;
     right: 0;
-    width: 450px;
-    min-height: 300px;
     background-color: #000000;
     border: 3px inset #FFA900;
     border-radius: 5%;
@@ -140,6 +145,11 @@ span {
     transition: all 0.5s ease-in;
     box-shadow: 0px 0px 7px 3px #FFC873;
     display: none;
+}
+
+.pop-up-saveSourceText {
+    width: 450px;
+    height: 300px;
 }
 
 .pop-up-cancel {
@@ -170,6 +180,37 @@ span {
 
 .pop-up-saveSourceText > hr {
     width: 75%;
+}
+
+.pop-up-sourceList {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 100px 0px 0px 0px;
+    z-index: 150;
+    transition: all 0.5s ease-in;
+    width: 70%;
+    display: none;
+    font-size: 1.1rem;
+    text-align: left;
+}
+
+table {
+    width: 95%;
+    margin-left: 10%;
+}
+
+.table-th-textName {
+    width: 30%;
+}
+
+.table-th-textDescription {
+    width: 55%;
+}
+
+td {
+    border: 1px solid orange;
 }
 
 img {
