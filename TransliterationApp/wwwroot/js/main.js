@@ -61,6 +61,13 @@ $(document).ready(function () {
             $(this).css('color', '#15D5DD');
         }).on('mouseout', 'tr', function () {
             $(this).css('color', 'orange');
+        }).on('mousedown', 'tr', function (event) {
+            if (event.which == 1) {
+                LoadSelectedSource(event.target);
+            }
+            else if (event.which == 3) {
+                alert("Нажали правую кнопку мыши");
+            }
         });
     })();
 });
@@ -94,6 +101,37 @@ function GenerateTable() {
         tr.appendChild(td3);
 
         document.getElementById('sourceList-table-body').appendChild(tr);
+    }
+}
+
+function LoadSelectedSource(row) {
+    var textName = row.parentNode.children[0].innerText;
+    $.ajax({
+        url: "http://localhost:50860/sourcetext/getSelectedSource",
+        method: "POST",
+        contentType: "application/json",
+        dataType: 'text',
+        data: JSON.stringify(textName),
+        success: function (data) {
+            LoadSource(data);
+        },
+        error: function () {
+            $('.displayInfo').css('color', 'RED').text(".:: Error loading source");
+        }
+    });
+}
+
+function LoadSource(text) {
+    if (text != "undefined") {
+        HideNap();
+        data = JSON.parse(text);
+        $.each(data, function (index, value) {
+            $('#originalText').text(value.textContent);
+            $('.displayInfo').css('color', '#15D5DD').text(`.:: '${value.textName}' uploaded successfully`);
+        });
+    }
+    else {
+        $('.displayInfo').css('color', 'RED').text(".:: Unable to load source");
     }
 }
 

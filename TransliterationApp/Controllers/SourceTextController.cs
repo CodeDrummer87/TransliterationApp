@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using TransliterationApp.Models;
 using TransliterationApp.Models.DbSets;
 
@@ -43,6 +44,19 @@ namespace TransliterationApp.Controllers
         public IQueryable GetListSourceText()
         {
             return db.SourceTexts.Select(c => new { c.TextName, c.TextDescription, c.UploadDate });
+        }
+
+        [HttpPost]
+        public IQueryable GetSelectedSource([FromBody]string textName)
+        {
+            if (textName != null)
+            {
+                return db.SourceTexts.Where(source => source.TextName == textName);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
