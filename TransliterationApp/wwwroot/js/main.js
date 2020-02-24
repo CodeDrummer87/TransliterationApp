@@ -10,6 +10,8 @@ $(document).ready(function () {
     let mainHeight = windowHeight - headerHeight - footerHeight - 50;
     document.querySelector('main').style.height = mainHeight + "px";
 
+    GenerateTable();
+
     $('body').on('click', '.nap', function () {
         HideNap();
     });
@@ -74,6 +76,27 @@ function HideNap() {
     $('.nap').css('display', 'none');
 }
 
+function GenerateTable() {
+
+    for (var i = 0; i < 20; i++) {
+        var tr = document.createElement('tr');
+
+        var td1 = document.createElement('td');
+        td1.classList.add("table-th-textName");
+        tr.appendChild(td1);
+
+        var td2 = document.createElement('td');
+        td2.classList.add("table-th-textDescription");
+        tr.appendChild(td2);
+
+        var td3 = document.createElement('td');
+        td3.classList.add("table-th-saveDate");
+        tr.appendChild(td3);
+
+        document.getElementById('sourceList-table-body').appendChild(tr);
+    }
+}
+
 function SaveSourceTextInDb(text) {
     $.ajax({
         url: "http://localhost:50860/sourcetext/post",
@@ -106,25 +129,15 @@ function GetListSavedSourceTexts() {
 }
 
 function DisplaySourceList(list) {
+
+    var tbody = document.querySelector('#sourceList-table-body');
+    var trs = tbody.children;
+
     $.each(list, function (index, value) {
-        var tr = document.createElement("tr");
-
-        var td1 = document.createElement("td");
-        td1.classList.add('table-th-textName');
-        td1.innerText = value.textName;
-        tr.appendChild(td1);
-
-        var td2 = document.createElement("td");
-        td2.classList.add('table-th-textDescription');
-        td2.innerText = value.textDescription;
-        tr.appendChild(td2);
-
-        var td3 = document.createElement("td");
-        td3.classList.add('table-th-saveData');
-        td3.innerText = GetDate(value.uploadDate);
-        tr.appendChild(td3);
-
-        $('#sourceList-table-body').append(tr);
+        var tds = trs[index].children;
+        tds[0].innerText = value.textName;
+        tds[1].innerText = value.textDescription;
+        tds[2].innerHTML = GetDate(value.uploadDate);
     });
 }
 

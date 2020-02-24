@@ -201,16 +201,17 @@ table {
     margin-left: 10%;
 }
 
+th {
+    color: #20F8F0;
+    border-bottom: 1px solid #15D5DD;
+}
+
 .table-th-textName {
     width: 30%;
 }
 
 .table-th-textDescription {
     width: 55%;
-}
-
-td {
-    border: 1px solid orange;
 }
 
 img {
