@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using TransliterationApp.Models;
 using TransliterationApp.Models.DbSets;
 
@@ -47,7 +46,7 @@ namespace TransliterationApp.Controllers
         }
 
         [HttpPost]
-        public IQueryable GetSelectedSource([FromBody]string textName)
+        public IQueryable GetSelectedSource([FromBody] string textName)
         {
             if (textName != null)
             {
@@ -56,6 +55,26 @@ namespace TransliterationApp.Controllers
             else
             {
                 return null;
+            }
+        }
+
+        [HttpPost]
+        public string DeleteSelectedSource([FromBody] string textName)
+        {
+            if (textName != null)
+            {
+                var source = db.SourceTexts.Where(s => s.TextName == textName).FirstOrDefault();
+                if (source != null)
+                {
+                    db.SourceTexts.Remove(source);
+                    db.SaveChanges();
+                    return $".:: Source '{textName}' deleted successfully";
+                }
+                return ".:: Source has been deleted previously";
+            }
+            else
+            {
+                return $".:: The source doesn't exist";
             }
         }
     }

@@ -39,7 +39,8 @@ hr {
     background-color: #ffa900;
 }
 
-.left-block, .right-block {
+.left-block,
+.right-block {
     width: 49.5%;
     height: 600px;
     float: left;
@@ -51,14 +52,15 @@ hr {
     border-right: 1px solid #ffa900;
 }
 
-#originalText, #translatedText {
+#originalText, 
+#translatedText {
     width: 96%;
     height: 80%;
     background-color: #282626;
     border: none;
     border-radius: 2%;
     outline: none;
-    color: #ffa900;
+    color: #FFA900;
     font-size: 1.3rem;
 }
 
@@ -66,7 +68,8 @@ textarea {
     padding: 10px 10px;
 }
 
-select, button {
+select,
+button {
     margin: 4px 0;
     height: 1.5rem;
     border-radius: 2px;
@@ -78,7 +81,8 @@ select, button {
     font-size: 1.1rem;
 }
 
-select:hover, button:hover {
+select:hover,
+button:hover {
     box-shadow: 0px 0px 7px 3px #FFC873;
     background-color:  #FFC873;
     color: #d00019;
@@ -120,7 +124,8 @@ span {
     color: #46ff04;
 }
 
-.nap {
+.nap,
+.nap-for-confirm {
     background-color: rgba(0, 0, 0, 0.5);
     position: fixed;
     top: 0;
@@ -132,7 +137,12 @@ span {
     display: none;
 }
 
-.pop-up-saveSourceText {
+.nap-for-confirm {
+    z-index: 175;
+}
+
+.pop-up-saveSourceText,
+.pop-up-question {
     position: fixed;
     top: 0;
     left: 0;
@@ -140,7 +150,6 @@ span {
     background-color: #000000;
     border: 3px inset #FFA900;
     border-radius: 5%;
-    margin: 150px auto 0 auto;
     z-index: 150;
     transition: all 0.5s ease-in;
     box-shadow: 0px 0px 7px 3px #FFC873;
@@ -150,6 +159,7 @@ span {
 .pop-up-saveSourceText {
     width: 450px;
     height: 300px;
+    margin: 150px auto 0 auto;
 }
 
 .pop-up-cancel {
@@ -195,6 +205,25 @@ span {
     font-size: 1.1rem;
     text-align: left;
 }
+
+.pop-up-question {
+    width: 200px;
+    height: 80px;
+    margin: 200px auto 0 auto;
+    border-radius: 50%;
+    z-index: 200;
+}
+
+.pop-up-question > h3,
+.pop-up-question > button {
+    margin: 5px 0px;
+}
+
+.pop-up-question > button {
+    width: 30%;
+}
+
+
 
 table {
     width: 95%;

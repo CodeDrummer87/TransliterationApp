@@ -1,4 +1,5 @@
 ﻿var currentPopup = null;
+var elementForDelete = '';
 
 $(document).ready(function () {
     var windowHeight = window.innerHeight;
@@ -10,6 +11,9 @@ $(document).ready(function () {
     let mainHeight = windowHeight - headerHeight - footerHeight - 50;
     document.querySelector('main').style.height = mainHeight + "px";
 
+    $('body').on('contextmenu', false);
+
+    $('.displayInfo').css('color', '#15D5DD').text(sessionStorage.getItem('currentMessage'));
     GenerateTable();
 
     $('body').on('click', '.nap', function () {
@@ -18,6 +22,16 @@ $(document).ready(function () {
 
     $('.pop-up-cancel').on('click', 'span', function () {
         HideNap();
+    });
+
+    $('.pop-up-question').on('contextmenu', 'body', function () {
+        return false;
+    }).on('click', '#no', function () {
+        $('.pop-up-question').css('display', 'none');
+        $('.nap-for-confirm').css('display', 'none');
+        elementForDelete = '';
+    }).on('click', '#yes', function () {
+        DeleteSelectedSource(elementForDelete);
     });
 
     $('.left-block').on('click', '#loadSavedText', function () {
@@ -56,20 +70,21 @@ $(document).ready(function () {
         }
     });
 
-    (function() {
-        $('tbody').on('mouseenter', 'tr', function () {
-            $(this).css('color', '#15D5DD');
-        }).on('mouseout', 'tr', function () {
-            $(this).css('color', 'orange');
-        }).on('mousedown', 'tr', function (event) {
-            if (event.which == 1) {
-                LoadSelectedSource(event.target);
-            }
-            else if (event.which == 3) {
-                alert("Нажали правую кнопку мыши");
-            }
-        });
-    })();
+    $('tbody').on('mouseenter', 'tr', function () {
+        $(this).css('color', '#15D5DD');
+    }).on('mouseout', 'tr', function () {
+        $(this).css('color', 'orange');
+    }).on('mousedown', 'tr', function (event) {
+        if (event.which == 1) {
+            LoadSelectedSource(event.target);
+        }
+        if (event.which == 3) {
+            $(event.target.parentNode).css('color', 'RED');
+            $('.pop-up-question').css('display', 'block');
+            $('.nap-for-confirm').css('display', 'block');
+            elementForDelete = event.target.parentNode.children[0].innerText;
+        }
+    });
 });
 
 function ShowNap(modal) {
@@ -121,6 +136,29 @@ function LoadSelectedSource(row) {
     });
 }
 
+function DeleteSelectedSource(textName) {
+    if (textName != null) {
+        $.ajax({
+            url: "http://localhost:50860/sourcetext/deleteSelectedSource",
+            method: "POST",
+            contentType: "application/json",
+            dataType: 'text',
+            data: JSON.stringify(textName),
+            success: function (message) {
+                HideNap();
+                sessionStorage.setItem('currentMessage', message);
+                window.location = window.location.href = "http://localhost:50860/";
+            },
+            error: function () {
+                $('.displayInfo').css('color', 'RED').text(".:: The request failed");
+            }
+        });
+    }
+    else {
+        console.log("value can not va null");
+    }
+}
+
 function LoadSource(text) {
     if (text != "undefined") {
         HideNap();
@@ -142,7 +180,7 @@ function SaveSourceTextInDb(text) {
         contentType: "application/json",
         data: JSON.stringify(text),
         success: function () {
-            $('.displayInfo').css('color','#15D5DD').text(`.:: Text '${text.TextName}' saved successfully`);
+            $('.displayInfo').css('color', '#15D5DD').text(`.:: Text '${text.TextName}' saved successfully`);
         },
         error: function () {
             $('.displayInfo').css('color', 'RED').text(`.:: Text '${text.TextName}' not saved`);
@@ -169,13 +207,13 @@ function GetListSavedSourceTexts() {
 function DisplaySourceList(list) {
 
     var tbody = document.querySelector('#sourceList-table-body');
-    var trs = tbody.children;
+    var rows = tbody.children;
 
     $.each(list, function (index, value) {
-        var tds = trs[index].children;
-        tds[0].innerText = value.textName;
-        tds[1].innerText = value.textDescription;
-        tds[2].innerHTML = GetDate(value.uploadDate);
+        var cells = rows[index].children;
+        cells[0].innerText = value.textName;
+        cells[1].innerText = value.textDescription;
+        cells[2].innerHTML = GetDate(value.uploadDate);
     });
 }
 
