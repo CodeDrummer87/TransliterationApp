@@ -24,9 +24,7 @@ $(document).ready(function () {
         HideNap();
     });
 
-    $('.pop-up-question').on('contextmenu', 'body', function () {
-        return false;
-    }).on('click', '#no', function () {
+    $('.pop-up-question').on('click', '#no', function () {
         $('.pop-up-question').css('display', 'none');
         $('.nap-for-confirm').css('display', 'none');
         elementForDelete = '';
@@ -37,6 +35,9 @@ $(document).ready(function () {
     $('.left-block').on('click', '#loadSavedText', function () {
         ShowNap('.pop-up-sourceList');
         GetListSavedSourceTexts();
+    }).on('click', '#clearOriginalText', function () {
+        $('#originalText').val(" ");
+        $('.displayInfo').css('color', '#15D5DD').text(".:: Input field cleared");
     }).on('click', '#saveSourceText', function () {
         ShowNap('.pop-up-saveSourceText');
         $('#inputSourceTextName').focus();
@@ -164,7 +165,7 @@ function LoadSource(text) {
         HideNap();
         data = JSON.parse(text);
         $.each(data, function (index, value) {
-            $('#originalText').text(value.textContent);
+            $('#originalText').val(value.textContent);
             $('.displayInfo').css('color', '#15D5DD').text(`.:: '${value.textName}' uploaded successfully`);
         });
     }
