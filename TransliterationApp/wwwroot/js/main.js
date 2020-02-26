@@ -1,5 +1,6 @@
 ﻿var currentPopup = null;
 var elementForDelete = '';
+var selectedRow = null;
 
 $(document).ready(function () {
     var windowHeight = window.innerHeight;
@@ -12,8 +13,10 @@ $(document).ready(function () {
     document.querySelector('main').style.height = mainHeight + "px";
 
     $('body').on('contextmenu', false);
-
-    $('.displayInfo').css('color', '#15D5DD').text(sessionStorage.getItem('currentMessage'));
+    $('#originalText').val(sessionStorage.getItem('content'));
+    if (sessionStorage.getItem('currentMessage') != null) {
+        showMessageForLeftBlock(sessionStorage.getItem('currentMessage'), true);
+    }
     GenerateTable();
 
     $('body').on('click', '.nap', function () {
@@ -28,6 +31,7 @@ $(document).ready(function () {
         $('.pop-up-question').css('display', 'none');
         $('.nap-for-confirm').css('display', 'none');
         elementForDelete = '';
+        selectRow(selectedRow, false);
     }).on('click', '#yes', function () {
         DeleteSelectedSource(elementForDelete);
     });
@@ -80,10 +84,11 @@ $(document).ready(function () {
             LoadSelectedSource(event.target);
         }
         if (event.which == 3) {
-            $(event.target.parentNode).css('color', 'RED');
             $('.pop-up-question').css('display', 'block');
             $('.nap-for-confirm').css('display', 'block');
-            elementForDelete = event.target.parentNode.children[0].innerText;
+            elementForDelete = event.target.parentNode.children[0].innerText;   //.:: For 'pop-up-question'
+            selectedRow = event.target;                                         //.:: also
+            selectRow(selectedRow, true);       
         }
     });
 });
@@ -120,6 +125,26 @@ function GenerateTable() {
     }
 }
 
+function showMessageForLeftBlock(message, success) {
+    if (success) {
+        $('.displayInfo').css('color', '#15D5DD').text(message);
+    }
+    else {
+        $('.displayInfo').css('color', 'RED').text(message);
+    }
+    sessionStorage.setItem('currentMessage', message);
+    sessionStorage.setItem('content', $('#originalText').val());
+}
+
+function selectRow(row, selected) {
+    if (selected) {
+        $(row.parentNode).css('background-color', '#5C4C4C');
+    }
+    else {
+        $(row.parentNode).css('background-color', 'inherit');
+    }
+}
+
 function LoadSelectedSource(row) {
     var textName = row.parentNode.children[0].innerText;
     $.ajax({
@@ -132,7 +157,7 @@ function LoadSelectedSource(row) {
             LoadSource(data);
         },
         error: function () {
-            $('.displayInfo').css('color', 'RED').text(".:: Error loading source");
+            showMessageForLeftBlock(".:: Error loading source", false);
         }
     });
 }
@@ -147,16 +172,16 @@ function DeleteSelectedSource(textName) {
             data: JSON.stringify(textName),
             success: function (message) {
                 HideNap();
-                sessionStorage.setItem('currentMessage', message);
+                showMessageForLeftBlock(message, true);
                 window.location = window.location.href = "http://localhost:50860/";
             },
             error: function () {
-                $('.displayInfo').css('color', 'RED').text(".:: The request failed");
+                showMessageForLeftBlock(".:: The request failed", false);
             }
         });
     }
     else {
-        console.log("value can not va null");
+        showMessageForLeftBlock(".:: Error of deleting", false);
     }
 }
 
@@ -166,11 +191,11 @@ function LoadSource(text) {
         data = JSON.parse(text);
         $.each(data, function (index, value) {
             $('#originalText').val(value.textContent);
-            $('.displayInfo').css('color', '#15D5DD').text(`.:: '${value.textName}' uploaded successfully`);
+            showMessageForLeftBlock(`.:: '${value.textName}' uploaded successfully`, true);
         });
     }
     else {
-        $('.displayInfo').css('color', 'RED').text(".:: Unable to load source");
+        showMessageForLeftBlock(".:: Unable to load source", false);
     }
 }
 
@@ -181,10 +206,10 @@ function SaveSourceTextInDb(text) {
         contentType: "application/json",
         data: JSON.stringify(text),
         success: function () {
-            $('.displayInfo').css('color', '#15D5DD').text(`.:: Text '${text.TextName}' saved successfully`);
+            showMessageForLeftBlock(`.:: Text '${text.TextName}' saved successfully`, true);
         },
         error: function () {
-            $('.displayInfo').css('color', 'RED').text(`.:: Text '${text.TextName}' not saved`);
+            showMessageForLeftBlock(`.:: Text '${text.TextName}' not saved`, false);
         }
     });
     HideNap();
@@ -197,10 +222,10 @@ function GetListSavedSourceTexts() {
         contentType: "application/json",
         success: function (data) {
             DisplaySourceList(data);
-            $('.displayInfo').css('color', '#15D5DD').text(".:: Source list uploaded");
+            showMessageForLeftBlock(".:: Source list uploaded", true);
         },
         error: function () {
-            $('.displayInfo').css('color', 'red').text(".:: Error loading source list");
+            showMessageForLeftBlock(".:: Error loading source list", false);
         }
     });
 }
