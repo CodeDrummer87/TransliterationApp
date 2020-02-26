@@ -175,7 +175,6 @@ function DeleteSelectedSource(textName) {
             success: function (message) {
                 HideNap();
                 showMessageForLeftBlock(message, true);
-                GetCurrentCounter();
                 window.location = window.location.href = "http://localhost:50860/";
             },
             error: function () {
@@ -204,13 +203,22 @@ function LoadSource(text) {
 
 function SaveSourceTextInDb(text) {
     $.ajax({
-        url: "http://localhost:50860/sourcetext/post",
+        url: "http://localhost:50860/sourcetext/saveSource",
         method: "POST",
         contentType: "application/json",
         data: JSON.stringify(text),
-        success: function () {
+        success: function (response) {
             GetCurrentCounter();
-            showMessageForLeftBlock(`.:: Text '${text.TextName}' saved successfully`, true);
+            console.log(response);
+            if (response == 1) {
+                showMessageForLeftBlock(`.:: Text '${text.TextName}' saved successfully`, true);
+            }
+            else if (response == -1) {
+                showMessageForLeftBlock(".:: Text not saved. Storage limit for sources exceeded", false);
+            }
+            else {
+                showMessageForLeftBlock(".:: Save data was not sent", false);
+            }
         },
         error: function () {
             showMessageForLeftBlock(`.:: Text '${text.TextName}' not saved`, false);

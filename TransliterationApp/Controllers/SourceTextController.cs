@@ -12,7 +12,7 @@ namespace TransliterationApp.Controllers
     public class SourceTextController : Controller
     {
         public TransAppContext db;
-        private static int sourcesLimit = 20;
+        private static int sourceLimit = 20;
 
         public SourceTextController(TransAppContext context)
         {
@@ -25,19 +25,29 @@ namespace TransliterationApp.Controllers
         }
 
         [HttpPost]
-        public void Post([FromBody]SourceText data)
+        public int SaveSource([FromBody]SourceText data)
         {
-            if (data != null)
+            int currentCounter = GetSourceCounter();
+            if (currentCounter < sourceLimit)
             {
-                db.SourceTexts.Add(new SourceText
+                if (data != null)
                 {
-                    TextName = data.TextName,
-                    TextDescription = data.TextDescription,
-                    TextContent = data.TextContent,
-                    UploadDate = DateTime.Now
-                });
-                db.SaveChanges();
+                    db.SourceTexts.Add(new SourceText
+                    {
+                        TextName = data.TextName,
+                        TextDescription = data.TextDescription,
+                        TextContent = data.TextContent,
+                        UploadDate = DateTime.Now
+                    });
+                    db.SaveChanges();
+
+                    return 1;
+                }
+                else
+                    return 0;
             }
+            else
+                return -1;
         }
 
         [HttpGet]
@@ -82,8 +92,13 @@ namespace TransliterationApp.Controllers
         [HttpPost]
         public int GetCounter()
         {
-            int currentSourcesLimit = sourcesLimit - db.SourceTexts.Where(text => text.TextId > 0).Count();
+            int currentSourcesLimit = sourceLimit - db.SourceTexts.Where(text => text.TextId > 0).Count();
             return currentSourcesLimit;
+        }
+
+        private int GetSourceCounter()
+        {
+            return db.SourceTexts.Where(text => text.TextId > 0).Count();
         }
     }
 }
