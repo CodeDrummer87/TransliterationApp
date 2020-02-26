@@ -12,6 +12,7 @@ namespace TransliterationApp.Controllers
     public class SourceTextController : Controller
     {
         public TransAppContext db;
+        private static int sourcesLimit = 20;
 
         public SourceTextController(TransAppContext context)
         {
@@ -76,6 +77,13 @@ namespace TransliterationApp.Controllers
             {
                 return $".:: The source doesn't exist";
             }
+        }
+
+        [HttpPost]
+        public int GetCounter()
+        {
+            int currentSourcesLimit = sourcesLimit - db.SourceTexts.Where(text => text.TextId > 0).Count();
+            return currentSourcesLimit;
         }
     }
 }

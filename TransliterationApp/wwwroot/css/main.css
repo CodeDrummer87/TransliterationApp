@@ -200,7 +200,7 @@ span {
     margin: 100px 0px 0px 0px;
     z-index: 150;
     transition: all 0.5s ease-in;
-    width: 70%;
+    width: 97%;
     display: none;
     font-size: 1.1rem;
     text-align: left;
@@ -226,8 +226,9 @@ span {
 
 
 table {
-    width: 95%;
-    margin-left: 10%;
+    width: 70%;
+    margin-left: 3%;
+    float: left;
 }
 
 th {
@@ -241,6 +242,20 @@ th {
 
 .table-th-textDescription {
     width: 55%;
+}
+
+.limit-counter {
+    position: relative;
+    width: 27%;
+    float: right;
+    text-align: center;
+    color: #15D5DD;
+}
+
+.limit-counter > h1 {
+    font-size: 4.5rem;
+    font-family: Consolas;
+    font-weight: 100;
 }
 
 img {

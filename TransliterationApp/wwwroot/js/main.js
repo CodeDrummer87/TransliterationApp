@@ -12,6 +12,8 @@ $(document).ready(function () {
     let mainHeight = windowHeight - headerHeight - footerHeight - 50;
     document.querySelector('main').style.height = mainHeight + "px";
 
+    GetCurrentCounter();
+
     $('body').on('contextmenu', false);
     $('#originalText').val(sessionStorage.getItem('content'));
     if (sessionStorage.getItem('currentMessage') != null) {
@@ -41,7 +43,7 @@ $(document).ready(function () {
         GetListSavedSourceTexts();
     }).on('click', '#clearOriginalText', function () {
         $('#originalText').val(" ");
-        $('.displayInfo').css('color', '#15D5DD').text(".:: Input field cleared");
+        showMessageForLeftBlock(".:: Input field cleared", true);
     }).on('click', '#saveSourceText', function () {
         ShowNap('.pop-up-saveSourceText');
         $('#inputSourceTextName').focus();
@@ -65,12 +67,12 @@ $(document).ready(function () {
                 $('#inputSourceTextDescription').val('');
             }
             else {
-                $('.displayInfo').css('color', 'RED').text(".:: Name required");
+                showMessageForLeftBlock(".:: Name required", false);
                 HideNap();
             }    
         }
         else {
-            $('.displayInfo').css('color', 'RED').text(".:: Nothing to save");
+            showMessageForLeftBlock(".:: Nothing to save", false)
             HideNap();
         }
     });
@@ -173,6 +175,7 @@ function DeleteSelectedSource(textName) {
             success: function (message) {
                 HideNap();
                 showMessageForLeftBlock(message, true);
+                GetCurrentCounter();
                 window.location = window.location.href = "http://localhost:50860/";
             },
             error: function () {
@@ -206,6 +209,7 @@ function SaveSourceTextInDb(text) {
         contentType: "application/json",
         data: JSON.stringify(text),
         success: function () {
+            GetCurrentCounter();
             showMessageForLeftBlock(`.:: Text '${text.TextName}' saved successfully`, true);
         },
         error: function () {
@@ -241,6 +245,39 @@ function DisplaySourceList(list) {
         cells[1].innerText = value.textDescription;
         cells[2].innerHTML = GetDate(value.uploadDate);
     });
+
+    GetCurrentCounter();
+    let color = SetColorForCounter();
+    $('.limit-counter > h1').css('color', color).text(sessionStorage.getItem('count'));
+}
+
+function GetCurrentCounter() {
+    $.ajax({
+        url: "http://localhost:50860/sourceText/getCounter",
+        method: "POST",
+        contentType: "application/json",
+        success: function (data) {
+            sessionStorage.setItem('count', data);
+        },
+        error: function () {
+            showMessageForLeftBlock(".:: Error loading counter sources", false);
+        }
+    });
+}
+
+function SetColorForCounter() {
+    let counter = sessionStorage.getItem('count');
+    let color = '#FFA900';
+    if (counter > 10) {
+        color = '#46FF04';
+    }
+    if (counter <= 10 && counter > 5) {
+        color = '#F8F908';
+    }
+    else if (counter <= 5) {
+        color = '#D00019';
+    }
+    return color;
 }
 
 function GetDate(date) {
