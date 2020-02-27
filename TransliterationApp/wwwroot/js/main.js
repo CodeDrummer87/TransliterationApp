@@ -216,6 +216,9 @@ function SaveSourceTextInDb(text) {
             else if (response == -1) {
                 showMessageForLeftBlock(".:: Text not saved. Storage limit for sources exceeded", false);
             }
+            else if (response == -2) {
+                showMessageForLeftBlock(".:: Source with the same name already exists. Enter a unique name", false);
+            }
             else {
                 showMessageForLeftBlock(".:: Save data was not sent", false);
             }

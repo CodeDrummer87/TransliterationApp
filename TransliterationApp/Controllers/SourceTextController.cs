@@ -32,16 +32,21 @@ namespace TransliterationApp.Controllers
             {
                 if (data != null)
                 {
-                    db.SourceTexts.Add(new SourceText
+                    if (CheckTextNameForExist(data.TextName))
                     {
-                        TextName = data.TextName,
-                        TextDescription = data.TextDescription,
-                        TextContent = data.TextContent,
-                        UploadDate = DateTime.Now
-                    });
-                    db.SaveChanges();
+                        db.SourceTexts.Add(new SourceText
+                        {
+                            TextName = data.TextName,
+                            TextDescription = data.TextDescription,
+                            TextContent = data.TextContent,
+                            UploadDate = DateTime.Now
+                        });
+                        db.SaveChanges();
 
-                    return 1;
+                        return 1;
+                    }
+                    else
+                        return -2;
                 }
                 else
                     return 0;
@@ -99,6 +104,16 @@ namespace TransliterationApp.Controllers
         private int GetSourceCounter()
         {
             return db.SourceTexts.Where(text => text.TextId > 0).Count();
+        }
+
+        private bool CheckTextNameForExist(string textName)
+        {
+            var temp = db.SourceTexts.Where(s => s.TextName == textName).FirstOrDefault();
+            if(temp == null)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
