@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TransliterationApp.Models.DbSets;
+using TransliterationApp.Modules.Implementation;
+using TransliterationApp.Modules.Interfaces;
 
 namespace TransliterationApp
 {
@@ -31,6 +33,8 @@ namespace TransliterationApp
 
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<TransAppContext>(options => options.UseSqlServer(connection));
+
+            services.AddScoped<ISourceTransfer, SourceTransfer>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

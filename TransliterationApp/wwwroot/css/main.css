@@ -231,6 +231,10 @@ table {
     float: left;
 }
 
+tr:hover {
+    color: #15D5DD;
+}
+
 th {
     color: #20F8F0;
     border-bottom: 1px solid #15D5DD;
