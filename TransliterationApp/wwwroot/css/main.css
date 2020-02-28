@@ -68,7 +68,6 @@ textarea {
     padding: 10px 10px;
 }
 
-select,
 button {
     margin: 4px 0;
     height: 1.5rem;
@@ -81,7 +80,6 @@ button {
     font-size: 1.1rem;
 }
 
-select:hover,
 button:hover {
     box-shadow: 0px 0px 7px 3px #FFC873;
     background-color:  #FFC873;
@@ -98,7 +96,7 @@ button:active {
     color: #FFC873;
 }
 
-select {
+#chooseTranslitSystem {
     width: 17rem;
 }
 
@@ -192,7 +190,8 @@ span {
     width: 75%;
 }
 
-.pop-up-sourceList {
+.pop-up-sourceList,
+.pop-up-translitSystemList {
     position: fixed;
     top: 0;
     left: 0;
@@ -204,6 +203,26 @@ span {
     display: none;
     font-size: 1.1rem;
     text-align: left;
+}
+
+.pop-up-translitSystemList {
+    text-align: center;
+}
+
+.pop-up-translitSystemList > hr {
+    width: 75%;
+    position: center;
+}
+
+.pop-up-translitSystemList > table {
+    width: 100%;
+    margin: auto;
+}
+
+.table-td-translitSystem {
+    width: 20%;
+    padding: 0;
+    margin: 0;
 }
 
 .pop-up-question {
@@ -223,15 +242,14 @@ span {
     width: 30%;
 }
 
-
-
-table {
+.pop-up-sourceList > table {
     width: 70%;
     margin-left: 3%;
     float: left;
 }
 
-tr:hover {
+#sourceList-table-body > tr:hover,
+.table-td-translitSystem:hover {
     color: #15D5DD;
 }
 

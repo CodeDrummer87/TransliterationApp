@@ -8,7 +8,7 @@ $(document).ready(function () {
     if (sessionStorage.getItem('currentMessage') != null) {
         showMessageForLeftBlock(sessionStorage.getItem('currentMessage'), true);
     }
-    GenerateTable();
+    GenerateTableForSourceList();
 
     $('.pop-up-question').on('click', '#no', function () {
         $('.pop-up-question').css('display', 'none');
@@ -72,7 +72,7 @@ $(document).ready(function () {
     });
 });
 
-function GenerateTable() {
+function GenerateTableForSourceList() {
 
     for (var i = 0; i < 20; i++) {
         var tr = document.createElement('tr');
@@ -188,7 +188,6 @@ function GetListSavedSourceTexts() {
     $.ajax({
         url: "http://localhost:50860/sourceText/GetListSourceText",
         method: "GET",
-        contentType: "application/json",
         success: function (data) {
             DisplaySourceList(data);
             showMessageForLeftBlock(".:: Source list uploaded", true);

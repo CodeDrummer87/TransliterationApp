@@ -35,6 +35,7 @@ namespace TransliterationApp
             services.AddDbContext<TransAppContext>(options => options.UseSqlServer(connection));
 
             services.AddScoped<ISourceTransfer, SourceTransfer>();
+            services.AddScoped<ITranslitSystemTransfer, TranslitSystemTransfer>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

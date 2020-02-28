@@ -29,11 +29,7 @@
                 <h1>OriginaL</h1>
                 <textarea id="originalText" autofocus></textarea>
                 <button id="loadSavedText">Saved Texts</button>
-                <select size="1">
-                    <option selected disabled>Choose Transliteration System</option>
-                    <option>Add new transliteration system</option>
-                    <option>Delete transliteration system</option>
-                </select>
+                <button id="chooseTranslitSystem">Choose Transliteration System</button>
                 <button>Apply</button>
                 <button id="clearOriginalText">Clear</button>
                 <button id="saveSourceText">Save Text</button>
@@ -60,7 +56,9 @@
             <textarea placeholder="Description" id="inputSourceTextDescription"></textarea><br/>
             <button id="saveSourceTextInDb">Save</button>
         </div>
+
         <div class="nap"></div>
+
         <div class="pop-up-sourceList">
             <table>
                 <thead>
@@ -77,6 +75,15 @@
                 <h1 title="Places to save"></h1>
             </div>
         </div>
+
+        <div class="pop-up-translitSystemList">
+            <h2>Available Transliteration Systems</h2>
+            <hr/>
+            <table>
+                <tbody id="translitSystem-table-body"></tbody>
+            </table>
+        </div>
+
         <div class="pop-up-question">
             <h3>Delete it?</h3>
             <button id="yes">Yes</button>
@@ -93,5 +100,6 @@
 
     <script src="~/js/main.js"></script>
     <script src="~/js/leftBlock.js"></script>
+    <script src="~/js/intermediary.js"></script>
 </body>
 </html>
