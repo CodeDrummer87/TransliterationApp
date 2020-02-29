@@ -76,7 +76,10 @@ namespace TransliterationApp.Modules.Implementation
                     db.SaveChanges();
                     return $".:: Source '{textName}' deleted successfully";
                 }
-                return ".:: Source has been deleted previously";
+                else
+                {
+                    return ".:: Source has been deleted previously";
+                }
             }
             else
             {

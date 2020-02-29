@@ -1,10 +1,39 @@
-﻿$(document).ready(function () {
+﻿var cellForDelete = '';
+selectedCell = null;
+
+$(document).ready(function () {
 
     GenerateTableForTranslitSystems();
 
     $('.left-block').on('click', '#chooseTranslitSystem', function () {
         ShowNap('.pop-up-translitSystemList');
         GetTranslitSystemList();
+    });
+
+    $('.pop-up-question').on('click', '#no', function () {
+        $('.pop-up-question').css('display', 'none');
+        $('.nap-for-confirm').css('display', 'none');
+        cellForDelete = '';
+        if (selectedCell != null) {
+            SelectCell(selectedCell, false);
+        }
+    }).on('click', '#yes', function () {
+        if (cellForDelete != '') {
+            DeleteSelectedTransliterationSystem(cellForDelete);
+        }
+    });
+
+    $('.pop-up-translitSystemList').on('mousedown', 'tr', function (event) {
+        if (event.which == 1) {
+
+        }
+        else if (event.which == 3) {
+            $('.pop-up-question').css('display', 'block');
+            $('.nap-for-confirm').css('display', 'block');
+            cellForDelete = event.target.innerText;
+            selectedCell = event.target;
+            SelectCell(selectedCell, true);
+        }
     });
 
 });
@@ -31,6 +60,15 @@ function GenerateTableForTranslitSystems() {
         tr.appendChild(td4);
 
         document.getElementById('translitSystem-table-body').appendChild(tr);
+    }
+}
+
+function SelectCell(cell, selected) {
+    if (selected) {
+        $(cell).css('background-color', '#5C4C4C');
+    }
+    else {
+        $(cell).css('background-color', 'inherit');
     }
 }
 
@@ -61,5 +99,28 @@ function DisplayAvailabeTranslitSystems(data) {
             index = 0;
         }
         cells[index++].innerText = data[i].systemName;
+    }
+}
+
+function DeleteSelectedTransliterationSystem(translitSystem) {
+    if (translitSystem != null) {
+        $.ajax({
+            url: "http://localhost:50860/translitSystem/deleteSelectedTranslitSystem",
+            method: "POST",
+            contentType: "application/json",
+            dataType: 'text',
+            data: JSON.stringify(translitSystem),
+            success: function(message) {
+                HideNap();
+                showMessageForLeftBlock(message, true);
+                window.location = window.location.href = "http://localhost:50860/";
+            },
+            error: function () {
+                showMessageForLeftBlock(".:: The request failed", false);
+            }
+        });
+    }
+    else {
+        showMessageForLeftBlock(".:: Error of deleting", false);
     }
 }

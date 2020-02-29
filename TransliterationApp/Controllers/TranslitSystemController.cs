@@ -21,5 +21,11 @@ namespace TransliterationApp.Controllers
         {
             return buffer.QueryForTranslierationSystemsList();
         }
+
+        [HttpPost]
+        public string DeleteSelectedTranslitSystem([FromBody] string systemName)
+        {
+            return buffer.DeleteTranslitSystem(systemName);
+        }
     }
 }

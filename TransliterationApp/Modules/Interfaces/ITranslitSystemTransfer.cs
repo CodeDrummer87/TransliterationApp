@@ -8,5 +8,6 @@ namespace TransliterationApp.Modules.Interfaces
     public interface ITranslitSystemTransfer
     {
         IQueryable QueryForTranslierationSystemsList();
+        string DeleteTranslitSystem(string translitSystem);
     }
 }

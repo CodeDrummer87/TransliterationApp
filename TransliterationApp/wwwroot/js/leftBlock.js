@@ -1,4 +1,4 @@
-﻿var elementForDelete = '';
+﻿var rowForDelete = '';
 var selectedRow = null;
 
 $(document).ready(function () {
@@ -13,10 +13,14 @@ $(document).ready(function () {
     $('.pop-up-question').on('click', '#no', function () {
         $('.pop-up-question').css('display', 'none');
         $('.nap-for-confirm').css('display', 'none');
-        elementForDelete = '';
-        selectRow(selectedRow, false);
+        rowForDelete = '';
+        if (selectedRow != null) {
+            SelectRow(selectedRow, false);
+        }
     }).on('click', '#yes', function () {
-        DeleteSelectedSource(elementForDelete);
+        if (rowForDelete != '') {
+            DeleteSelectedSource(rowForDelete);
+        }
     });
 
     $('.left-block').on('click', '#loadSavedText', function () {
@@ -58,16 +62,16 @@ $(document).ready(function () {
         }
     });
 
-    $('tbody').on('mousedown', 'tr', function (event) {
+    $('.pop-up-sourceList').on('mousedown', 'tr', function (event) {
         if (event.which == 1) {
             LoadSelectedSource(event.target);
         }
         if (event.which == 3) {
             $('.pop-up-question').css('display', 'block');
             $('.nap-for-confirm').css('display', 'block');
-            elementForDelete = event.target.parentNode.children[0].innerText;   //.:: For 'pop-up-question'
+            rowForDelete = event.target.parentNode.children[0].innerText;   //.:: For 'pop-up-question'
             selectedRow = event.target;                                         //.:: also
-            selectRow(selectedRow, true);
+            SelectRow(selectedRow, true);
         }
     });
 });
@@ -93,7 +97,7 @@ function GenerateTableForSourceList() {
     }
 }
 
-function selectRow(row, selected) {
+function SelectRow(row, selected) {
     if (selected) {
         $(row.parentNode).css('background-color', '#5C4C4C');
     }
