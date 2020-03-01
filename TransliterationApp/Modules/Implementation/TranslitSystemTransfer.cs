@@ -28,9 +28,16 @@ namespace TransliterationApp.Modules.Implementation
                 var system = db.Alphabets.Where(s => s.SystemName == systemName).FirstOrDefault();
                 if (system != null)
                 {
-                    db.Alphabets.Remove(system);
-                    db.SaveChanges();
-                    return $".:: The transliteration system '{systemName}' deleted successfully";
+                    if (system.SystemId > 6)
+                    {
+                        db.Alphabets.Remove(system);
+                        db.SaveChanges();
+                        return $".:: The transliteration system '{systemName}' deleted successfully";
+                    }
+                    else
+                    {
+                        return $".:: This transliteration system is protected against deletion";
+                    }
                 }
                 else
                 {
