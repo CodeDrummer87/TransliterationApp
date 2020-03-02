@@ -70,7 +70,7 @@ $(document).ready(function () {
             $('.pop-up-question').css('display', 'block');
             $('.nap-for-confirm').css('display', 'block');
             rowForDelete = event.target.parentNode.children[0].innerText;   //.:: For 'pop-up-question'
-            selectedRow = event.target;                                         //.:: also
+            selectedRow = event.target;                                     //.:: also
             SelectRow(selectedRow, true);
         }
     });

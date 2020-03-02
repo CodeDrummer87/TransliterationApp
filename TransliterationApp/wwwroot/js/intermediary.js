@@ -3,6 +3,15 @@ selectedCell = null;
 
 $(document).ready(function () {
 
+    $('.pop-up-translitSystemList').on('mouseenter', 'img', function () {
+        $(this).attr('src', '/images/addSystem_hover.png');
+    }).on('mouseout', 'img', function () {
+        $(this).attr('src', '/images/addSystem.png');
+    }).on('click', 'img', function () {
+        $('.nap-for-creatingSystem').css('display', 'block');
+        $('.pop-up-creatingNewSystem').css('display', 'block');
+    });
+
     GenerateTableForTranslitSystems();
 
     $('.left-block').on('click', '#chooseTranslitSystem', function () {

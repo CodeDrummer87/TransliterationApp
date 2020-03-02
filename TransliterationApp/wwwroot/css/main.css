@@ -123,8 +123,9 @@ span {
 }
 
 .nap,
-.nap-for-confirm {
-    background-color: rgba(0, 0, 0, 0.5);
+.nap-for-confirm,
+.nap-for-creatingSystem {
+    background-color: rgba(0, 0, 0, 0.6);
     position: fixed;
     top: 0;
     left: 0;
@@ -137,6 +138,11 @@ span {
 
 .nap-for-confirm {
     z-index: 175;
+}
+
+.nap-for-creatingSystem {
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 185;
 }
 
 .pop-up-saveSourceText,
@@ -191,7 +197,8 @@ span {
 }
 
 .pop-up-sourceList,
-.pop-up-translitSystemList {
+.pop-up-translitSystemList,
+.pop-up-creatingNewSystem {
     position: fixed;
     top: 0;
     left: 0;
@@ -202,16 +209,45 @@ span {
     width: 97%;
     display: none;
     font-size: 1.1rem;
-    text-align: left;
 }
 
-.pop-up-translitSystemList {
+.pop-up-creatingNewSystem {
+    z-index: 200;
+}
+
+.pop-up-creatingNewSystem > table {
+    margin: auto;
+}
+
+.td-addChar {
+    border: 2px solid orange;
+    border-radius: 7%;
+}
+
+.addChar {
+    width: 5rem;
+    background-color: #fcd395;
+    border-radius: 5%;
+    font-size: 1.2rem;
+    border: none;
+    outline: none;
     text-align: center;
 }
 
-.pop-up-translitSystemList > hr {
+.pop-up-sourceList {
+    text-align: left;
+}
+
+.pop-up-translitSystemList > hr,
+.pop-up-creatingNewSystem > hr {
     width: 75%;
     position: center;
+}
+.pop-up-translitSystemList > img {
+    position: fixed;
+    width: 3%;
+    height: 6.5%;
+    margin-left: -40%;
 }
 
 .pop-up-translitSystemList > table {
