@@ -224,7 +224,8 @@ span {
     border-radius: 7%;
 }
 
-.addChar {
+.addChar,
+#newSystemName {
     width: 5rem;
     background-color: #fcd395;
     border-radius: 5%;
@@ -232,6 +233,10 @@ span {
     border: none;
     outline: none;
     text-align: center;
+}
+
+#newSystemName {
+    width: 25rem;
 }
 
 .pop-up-sourceList {
@@ -315,6 +320,10 @@ th {
     font-size: 4.5rem;
     font-family: Consolas;
     font-weight: 100;
+}
+
+#errorNameMessage {
+    font-size: 1.3rem;
 }
 
 img {

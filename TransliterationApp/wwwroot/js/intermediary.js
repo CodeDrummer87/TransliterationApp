@@ -13,8 +13,20 @@ $(document).ready(function () {
     $('.pop-up-creatingNewSystem').on('click', '#createNewSystemCancel', function () {
         $('.nap-for-creatingSystem').css('display', 'none');
         $('.pop-up-creatingNewSystem').css('display', 'none');
+        ClearInputFields();
     }).on('click', '#createNewSystemReset', function () {
-        $('.addChar').val('');
+        ClearInputFields();
+    }).on('click', '#createNewSystemSave', function () {
+        if ($('#newSystemName').val() != '') {
+            SaveNewTransliterationSystem();
+            $('.nap-for-creatingSystem').css('display', 'none');
+            $('.pop-up-creatingNewSystem').css('display', 'none');
+            HideNap();
+            ClearInputFields();
+        }
+        else {
+            $('#errorNameMessage').css('color', 'RED').text("Name required for new transliteration system");
+        }
     });
 
     $('.pop-up-question').on('click', '#no', function () {
@@ -57,21 +69,10 @@ function GenerateTableForTranslitSystems() {
     for (var i = 0; i < 15; i++) {
         var tr = document.createElement('tr');
 
-        var td1 = document.createElement('td');
-        td1.classList.add("table-td-translitSystem");
-        tr.appendChild(td1);
-
-        var td2 = document.createElement('td');
-        td2.classList.add("table-td-translitSystem");
-        tr.appendChild(td2);
-
-        var td3 = document.createElement('td');
-        td3.classList.add("table-td-translitSystem");
-        tr.appendChild(td3);
-
-        var td4 = document.createElement('td');
-        td4.classList.add("table-td-translitSystem");
-        tr.appendChild(td4);
+        CreateCellForTable("table-td-translitSystem", tr);
+        CreateCellForTable("table-td-translitSystem", tr);
+        CreateCellForTable("table-td-translitSystem", tr);
+        CreateCellForTable("table-td-translitSystem", tr);
 
         document.getElementById('translitSystem-table-body').appendChild(tr);
     }
@@ -84,6 +85,12 @@ function SelectCell(cell, selected) {
     else {
         $(cell).css('background-color', 'inherit');
     }
+}
+
+function ClearInputFields() {
+    $('.addChar').val('');
+    $('#newSystemName').val('');
+    $('#errorNameMessage').text('');
 }
 
 function GetTranslitSystemList() {
@@ -137,4 +144,37 @@ function DeleteSelectedTransliterationSystem(translitSystem) {
     else {
         showMessageForLeftBlock(".:: Error of deleting", false);
     }
+}
+
+function SaveNewTransliterationSystem() {
+
+    var newSystem = GetNewSystem();
+
+    $.ajax({
+        url: "http://localhost:50860/TranslitSystem/SaveNewTransliterationSystem",
+        method: "POST",
+        contentType: "application/json",
+        dataType: "text",
+        data: JSON.stringify(newSystem),
+        success: function (message) {
+            showMessageForLeftBlock(message, true);
+        },
+        error: function () {
+            showMessageForLeftBlock(".:: Server error! New transliteration system has not been saved", false);
+        }
+    });
+}
+
+function GetNewSystem() {
+    var input = document.getElementsByClassName('addChar');
+    var system = [];
+
+    for (var i = 0; i < input.length; i++) {
+        system.push(input[i].value);
+    }
+
+    var systemName = $('#newSystemName').val();
+    system.push(systemName);
+
+    return system;
 }

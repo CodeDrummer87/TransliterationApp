@@ -21,6 +21,12 @@ $(document).ready(function () {
     });
 });
 
+function CreateCellForTable(nameOfClass, row) {
+    var td = document.createElement('td');
+    td.classList.add(nameOfClass);
+    row.appendChild(td);
+}
+
 function ShowNap(modal) {
     currentPopup = modal;
     $('.nap').css('display', 'block');

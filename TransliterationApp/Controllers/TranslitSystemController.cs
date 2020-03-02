@@ -27,5 +27,11 @@ namespace TransliterationApp.Controllers
         {
             return buffer.DeleteTranslitSystem(systemName);
         }
+
+        [HttpPost]
+        public string SaveNewTransliterationSystem([FromBody] string[] newSystem)
+        {
+            return buffer.SaveNewSystem(newSystem);
+        }
     }
 }

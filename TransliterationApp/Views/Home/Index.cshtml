@@ -51,9 +51,9 @@
         <div class="pop-up-saveSourceText">
             <div class="pop-up-cancel"><span>Cancel</span></div>
             <h2>Save Source Text</h2>
-            <input type="text" id="inputSourceTextName" placeholder="Save as..." required /><br/>
+            <input type="text" id="inputSourceTextName" placeholder="Save as..." required maxlength="50" /><br/>
             <hr/>
-            <textarea placeholder="Description" id="inputSourceTextDescription"></textarea><br/>
+            <textarea placeholder="Description" id="inputSourceTextDescription" maxlength="200" ></textarea><br/>
             <button id="saveSourceTextInDb">Save</button>
         </div>
 
@@ -233,10 +233,18 @@
                     </td>
                 </tr>
             </table>
-            <br/>
+            <br />
+            <p>
+                :::::::::::::::::::::::::::::::::::::::::::::::
+                <input type="text" id="newSystemName" placeholder="Enter name for new system" required maxlength="50"/>
+                :::::::::::::::::::::::::::::::::::::::::::::::
+            </p>
+            <br />
             <button id="createNewSystemCancel">Cancel</button>
             <button id="createNewSystemReset">Reset</button>
             <button id="createNewSystemSave">Save</button>
+            <br />
+            <p id="errorNameMessage"></p>
         </div>
 
         <div class="pop-up-question">

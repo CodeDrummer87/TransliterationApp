@@ -9,5 +9,6 @@ namespace TransliterationApp.Modules.Interfaces
     {
         IQueryable QueryForTranslierationSystemsList();
         string DeleteTranslitSystem(string translitSystem);
+        string SaveNewSystem(string[] newSystem);
     }
 }

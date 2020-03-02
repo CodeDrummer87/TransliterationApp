@@ -81,17 +81,9 @@ function GenerateTableForSourceList() {
     for (var i = 0; i < 20; i++) {
         var tr = document.createElement('tr');
 
-        var td1 = document.createElement('td');
-        td1.classList.add("table-th-textName");
-        tr.appendChild(td1);
-
-        var td2 = document.createElement('td');
-        td2.classList.add("table-th-textDescription");
-        tr.appendChild(td2);
-
-        var td3 = document.createElement('td');
-        td3.classList.add("table-th-saveDate");
-        tr.appendChild(td3);
+        CreateCellForTable("table-th-textName", tr);
+        CreateCellForTable("table-th-textDescription", tr);
+        CreateCellForTable("table-th-saveDate", tr);
 
         document.getElementById('sourceList-table-body').appendChild(tr);
     }
