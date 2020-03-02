@@ -3,20 +3,18 @@ selectedCell = null;
 
 $(document).ready(function () {
 
-    $('.pop-up-translitSystemList').on('mouseenter', 'img', function () {
-        $(this).attr('src', '/images/addSystem_hover.png');
-    }).on('mouseout', 'img', function () {
-        $(this).attr('src', '/images/addSystem.png');
-    }).on('click', 'img', function () {
-        $('.nap-for-creatingSystem').css('display', 'block');
-        $('.pop-up-creatingNewSystem').css('display', 'block');
-    });
-
     GenerateTableForTranslitSystems();
 
     $('.left-block').on('click', '#chooseTranslitSystem', function () {
         ShowNap('.pop-up-translitSystemList');
         GetTranslitSystemList();
+    });
+
+    $('.pop-up-creatingNewSystem').on('click', '#createNewSystemCancel', function () {
+        $('.nap-for-creatingSystem').css('display', 'none');
+        $('.pop-up-creatingNewSystem').css('display', 'none');
+    }).on('click', '#createNewSystemReset', function () {
+        $('.addChar').val('');
     });
 
     $('.pop-up-question').on('click', '#no', function () {
@@ -43,7 +41,14 @@ $(document).ready(function () {
             selectedCell = event.target;
             SelectCell(selectedCell, true);
         }
-    });
+    }).on('mouseenter', 'img', function () {
+        $(this).attr('src', '/images/addSystem_hover.png');
+    }).on('mouseout', 'img', function () {
+        $(this).attr('src', '/images/addSystem.png');
+    }).on('click', 'img', function () {
+        $('.nap-for-creatingSystem').css('display', 'block');
+        $('.pop-up-creatingNewSystem').css('display', 'block');
+    });;
 
 });
 

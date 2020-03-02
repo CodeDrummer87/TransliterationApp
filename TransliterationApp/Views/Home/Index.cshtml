@@ -87,7 +87,9 @@
 
         <div class="pop-up-creatingNewSystem">
             <h2>Setting new Transliteration System</h2>
-            <hr/>
+            <hr />
+            <p>* To save a special character, use the hexadecimal code of this character: &#x<span>0000</span></p>
+            <br />
             <table>
                 <tr>
                     <td class="td-addChar">
@@ -207,7 +209,7 @@
                     <td class="td-addChar">
                         <p>Ы: <input type="text" class="addChar" maxlength="7" /></p>
                         <p>ы: <input type="text" class="addChar" maxlength="7" /></p>
-                        
+
                     </td>
                 </tr>
                 <tr>
@@ -231,6 +233,10 @@
                     </td>
                 </tr>
             </table>
+            <br/>
+            <button id="createNewSystemCancel">Cancel</button>
+            <button id="createNewSystemReset">Reset</button>
+            <button id="createNewSystemSave">Save</button>
         </div>
 
         <div class="pop-up-question">
