@@ -55,12 +55,21 @@ namespace TransliterationApp.Modules.Implementation
         {
             if (newSystem != null)
             {
-                Alphabet system = MappingAlphabetFromStringArray(newSystem);
+                int currentNumberOfSavedSystems = GetNumberOfSavedSystems();
+                if (currentNumberOfSavedSystems < 40)
+                {
+                    Alphabet system = MappingAlphabetFromStringArray(newSystem);
 
-                db.Alphabets.Add(system);
-                db.SaveChanges();
+                    db.Alphabets.Add(system);
+                    db.SaveChanges();
 
-                return $".:: User transliteration system '{system.SystemName}' saved";
+                    return $".:: User transliteration system '{system.SystemName}' saved";
+                }
+                else
+                {
+                    return ".:: The system not saved because storage is full";
+                }
+                
             }
 
             return ".:: User transliteration system not defined";
@@ -139,5 +148,7 @@ namespace TransliterationApp.Modules.Implementation
 
             return system;
         }
+
+        private int GetNumberOfSavedSystems() => db.Alphabets.Where(a => a.SystemId > 0).Count();
     }
 }

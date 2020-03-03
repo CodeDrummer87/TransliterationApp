@@ -23,7 +23,7 @@ $(document).ready(function () {
             ClearInputFields();
         }
         else {
-            $('#errorNameMessage').css('color', 'RED').text("Name required for new transliteration system");
+            $('#systemSaveError').css('color', 'RED').text("Name required for new transliteration system");
         }
     });
 
@@ -97,7 +97,7 @@ function NapOverNap(state) {
 function ClearInputFields() {
     $('.addChar').val('');
     $('#newSystemName').val('');
-    $('#errorNameMessage').text('');
+    $('#systemSaveError').text('');
 }
 
 function GetTranslitSystemList() {
