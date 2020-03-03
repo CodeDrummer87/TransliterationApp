@@ -38,6 +38,17 @@ function HideNap() {
     $('.nap').css('display', 'none');
 }
 
+function ShowConfirm(state) {
+    if (state) {
+        $('.pop-up-question').css('display', 'block');
+        $('.nap-for-confirm').css('display', 'block');
+    }
+    else {
+        $('.pop-up-question').css('display', 'none');
+        $('.nap-for-confirm').css('display', 'none');
+    }
+}
+
 function showMessageForLeftBlock(message, success) {
     if (success) {
         $('.displayInfo').css('color', '#15D5DD').text(message);

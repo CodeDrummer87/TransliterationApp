@@ -11,8 +11,7 @@ $(document).ready(function () {
     GenerateTableForSourceList();
 
     $('.pop-up-question').on('click', '#no', function () {
-        $('.pop-up-question').css('display', 'none');
-        $('.nap-for-confirm').css('display', 'none');
+        ShowConfirm(false);
         rowForDelete = '';
         if (selectedRow != null) {
             SelectRow(selectedRow, false);
@@ -67,8 +66,7 @@ $(document).ready(function () {
             LoadSelectedSource(event.target);
         }
         if (event.which == 3) {
-            $('.pop-up-question').css('display', 'block');
-            $('.nap-for-confirm').css('display', 'block');
+            ShowConfirm(true);
             rowForDelete = event.target.parentNode.children[0].innerText;   //.:: For 'pop-up-question'
             selectedRow = event.target;                                     //.:: also
             SelectRow(selectedRow, true);

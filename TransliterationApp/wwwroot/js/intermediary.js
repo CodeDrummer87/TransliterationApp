@@ -11,16 +11,14 @@ $(document).ready(function () {
     });
 
     $('.pop-up-creatingNewSystem').on('click', '#createNewSystemCancel', function () {
-        $('.nap-for-creatingSystem').css('display', 'none');
-        $('.pop-up-creatingNewSystem').css('display', 'none');
+        NapOverNap(false);
         ClearInputFields();
     }).on('click', '#createNewSystemReset', function () {
         ClearInputFields();
     }).on('click', '#createNewSystemSave', function () {
         if ($('#newSystemName').val() != '') {
             SaveNewTransliterationSystem();
-            $('.nap-for-creatingSystem').css('display', 'none');
-            $('.pop-up-creatingNewSystem').css('display', 'none');
+            NapOverNap(false);
             HideNap();
             ClearInputFields();
         }
@@ -30,8 +28,7 @@ $(document).ready(function () {
     });
 
     $('.pop-up-question').on('click', '#no', function () {
-        $('.pop-up-question').css('display', 'none');
-        $('.nap-for-confirm').css('display', 'none');
+        ShowConfirm(false);
         cellForDelete = '';
         if (selectedCell != null) {
             SelectCell(selectedCell, false);
@@ -47,26 +44,25 @@ $(document).ready(function () {
 
         }
         else if (event.which == 3) {
-            $('.pop-up-question').css('display', 'block');
-            $('.nap-for-confirm').css('display', 'block');
+            ShowConfirm(true);
             cellForDelete = event.target.innerText;
             selectedCell = event.target;
             SelectCell(selectedCell, true);
         }
     }).on('mouseenter', 'img', function () {
-        $(this).attr('src', '/images/addSystem_hover.png');
+        $(this).attr('src', '/images/addNewSystem_hover.png');
     }).on('mouseout', 'img', function () {
-        $(this).attr('src', '/images/addSystem.png');
+        $(this).attr('src', '/images/addNewSystem.png');
     }).on('click', 'img', function () {
-        $('.nap-for-creatingSystem').css('display', 'block');
-        $('.pop-up-creatingNewSystem').css('display', 'block');
+        NapOverNap(true);
+        $('#newSystemName').focus();
     });;
 
 });
 
 function GenerateTableForTranslitSystems() {
 
-    for (var i = 0; i < 15; i++) {
+    for (var i = 0; i < 10; i++) {
         var tr = document.createElement('tr');
 
         CreateCellForTable("table-td-translitSystem", tr);
@@ -84,6 +80,17 @@ function SelectCell(cell, selected) {
     }
     else {
         $(cell).css('background-color', 'inherit');
+    }
+}
+
+function NapOverNap(state) {
+    if (state) {
+        $('.nap-for-creatingSystem').css('display', 'block');
+        $('.pop-up-creatingNewSystem').css('display', 'block');
+    }
+    else {
+        $('.nap-for-creatingSystem').css('display', 'none');
+        $('.pop-up-creatingNewSystem').css('display', 'none');
     }
 }
 
@@ -112,11 +119,11 @@ function DisplayAvailabeTranslitSystems(data) {
 
     var tbody = document.querySelector('#translitSystem-table-body');
     var rows = tbody.children;
-    var cells, index = 0;
-
+    var cells, index;
+    var rowCounter = 0;
     for (var i = 0; i < data.length; i++) {
         if (i % 4 == 0) {
-            cells = rows[i].children;
+            cells = rows[rowCounter++].children;
             index = 0;
         }
         cells[index++].innerText = data[i].systemName;
