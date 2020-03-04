@@ -55,19 +55,26 @@ namespace TransliterationApp.Modules.Implementation
         {
             if (newSystem != null)
             {
-                int currentNumberOfSavedSystems = GetNumberOfSavedSystems();
-                if (currentNumberOfSavedSystems < 40)
+                if (CheckForExist(newSystem[64]))
                 {
-                    Alphabet system = MappingAlphabetFromStringArray(newSystem);
+                    int currentNumberOfSavedSystems = GetNumberOfSavedSystems();
+                    if (currentNumberOfSavedSystems < 40)
+                    {
+                        Alphabet system = MappingAlphabetFromStringArray(newSystem);
 
-                    db.Alphabets.Add(system);
-                    db.SaveChanges();
+                        db.Alphabets.Add(system);
+                        db.SaveChanges();
 
-                    return $".:: User transliteration system '{system.SystemName}' saved";
+                        return $".:: User transliteration system '{system.SystemName}' saved";
+                    }
+                    else
+                    {
+                        return ".:: The system not saved because storage is full";
+                    }
                 }
                 else
                 {
-                    return ".:: The system not saved because storage is full";
+                    return $".:: A transliteration system named '{newSystem[64]}' already exists";
                 }
                 
             }
@@ -150,5 +157,15 @@ namespace TransliterationApp.Modules.Implementation
         }
 
         private int GetNumberOfSavedSystems() => db.Alphabets.Where(a => a.SystemId > 0).Count();
+
+        private bool CheckForExist(string systemName)
+        {
+            var temp = db.Alphabets.Where(s => s.SystemName == systemName).FirstOrDefault();
+            if (temp == null)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
