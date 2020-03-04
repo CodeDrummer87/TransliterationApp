@@ -33,9 +33,9 @@ INSERT INTO Alphabets VALUES (
 	'CH', 'ch',
 	'SH', 'sh',
 	'SHH', 'shh',
-	'&#x22',
+	'\u0022',
 	'Y', 'y',
-	'&#x27',
+	'\u0027',
 	'EH', 'eh',
 	'YU', 'yu',
 	'YA', 'ya'
