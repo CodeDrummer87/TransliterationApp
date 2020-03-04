@@ -60,6 +60,15 @@ function showMessageForLeftBlock(message, success) {
     sessionStorage.setItem('content', $('#originalText').val());
 }
 
+function showMessageForRightBlock(message, success) {
+    if (success) {
+        $('.displaySystemInfo').css('color', '#46FF04').text(message);
+    }
+    else {
+        $('.displaySystemInfo').css('color', 'RED').text(message);
+    }
+}
+
 function SetColorForCounter() {
     let counter = sessionStorage.getItem('count');
     let color = '#FFA900';

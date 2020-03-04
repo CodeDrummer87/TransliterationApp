@@ -41,7 +41,7 @@ $(document).ready(function () {
 
     $('.pop-up-translitSystemList').on('mousedown', 'tr', function (event) {
         if (event.which == 1) {
-
+            LoadSelectedTransliterationSystem(event.target);
         }
         else if (event.which == 3) {
             ShowConfirm(true);
@@ -184,4 +184,25 @@ function GetNewSystem() {
     system.push(systemName);
 
     return system;
+}
+
+function LoadSelectedTransliterationSystem(selectedSystem) {
+    var systemName = selectedSystem.innerText;
+    $.ajax({
+        url: "http://localhost:50860/Translator/chooseThisSystem",
+        method: 'POST',
+        contentType: 'application/json',
+        dataType: 'text',
+        data: JSON.stringify(systemName),
+        success: function (message) {
+            HideNap();
+            showMessageForLeftBlock(message, true);
+            showMessageForRightBlock(systemName, true);
+        },
+        error: function () {
+            HideNap();
+            showMessageForLeftBlock(".:: Error loading selected transliteration system", false);
+            showMessageForRightBlock(" System not defined", false);
+        }
+    });
 }

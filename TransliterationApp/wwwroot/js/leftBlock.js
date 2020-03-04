@@ -108,6 +108,7 @@ function LoadSelectedSource(row) {
             LoadSource(data);
         },
         error: function () {
+            HideNap();
             showMessageForLeftBlock(".:: Error loading source", false);
         }
     });
