@@ -67,6 +67,7 @@ function showMessageForRightBlock(message, success) {
     else {
         $('.displaySystemInfo').css('color', 'RED').text(message);
     }
+    sessionStorage.setItem('currentSystem', message);
 }
 
 function SetColorForCounter() {

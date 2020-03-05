@@ -3,6 +3,10 @@ selectedCell = null;
 
 $(document).ready(function () {
 
+    if (sessionStorage.getItem('currentSystem') != null) {
+        showMessageForRightBlock(sessionStorage.getItem('currentSystem'), true);
+    }
+
     GenerateTableForTranslitSystems();
 
     $('.left-block').on('click', '#chooseTranslitSystem', function () {
@@ -220,7 +224,7 @@ function GetTranslate() {
             data: JSON.stringify(text),
             success: function (translatedText) {
                 $('#translatedText').val(translatedText);
-                showMessageForLeftBlock(".:: Text translated by current system", true);
+                showMessageForLeftBlock(`.:: Text translated by '${sessionStorage.getItem('currentSystem')}' system`, true);
             },
             error: function () {
                 showMessageForLeftBlock(".:: The request failed", false);
