@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TransliterationApp.Models;
+using TransliterationApp.Modules.Interfaces;
 
 namespace TransliterationApp.Modules.Implementation
 {
-    public class AlphabetLoader
+    public static class AlphabetLoader
     {
         public static List<string> alphabet = new List<string>();
 
@@ -87,5 +88,7 @@ namespace TransliterationApp.Modules.Implementation
                 alphabet.Add(Ch);
             }
         }
+
+        public static List<string> GetCurrentAlphabet() => alphabet;
     }
 }

@@ -8,6 +8,8 @@ $(document).ready(function () {
     $('.left-block').on('click', '#chooseTranslitSystem', function () {
         ShowNap('.pop-up-translitSystemList');
         GetTranslitSystemList();
+    }).on('click', '#applyTranslitSystem', function () {
+        GetTranslate();
     });
 
     $('.pop-up-creatingNewSystem').on('click', '#createNewSystemCancel', function () {
@@ -205,4 +207,28 @@ function LoadSelectedTransliterationSystem(selectedSystem) {
             showMessageForRightBlock(" System not defined", false);
         }
     });
+}
+
+function GetTranslate() {
+    var text = $('#originalText').val();
+    if (text != '') {
+        $.ajax({
+            url: "http://localhost:50860/Translator/TryToTranslate",
+            method: "POST",
+            contentType: "application/json",
+            dataType: "text",
+            data: JSON.stringify(text),
+            success: function (translatedText) {
+                $('#translatedText').val(translatedText);
+                showMessageForLeftBlock(".:: Text translated by current system", true);
+            },
+            error: function () {
+                showMessageForLeftBlock(".:: The request failed", false);
+            }
+        });
+    }
+    else {
+        showMessageForLeftBlock(".:: Nothing to translate", false);
+        document.querySelector('#originalText').focus();
+    }
 }

@@ -30,5 +30,16 @@ namespace TransliterationApp.Modules.Implementation
                 return $".:: System not defined";
             }
         }
+
+        public string TryToTranslateText(string text)
+        {
+            List<string> alphabet = AlphabetLoader.GetCurrentAlphabet();
+            if (text != null && alphabet.Count != 0)
+            {
+                return Translator.TranslateText(text, alphabet);
+            }
+            else
+                return ".:: No transliteration system selected";
+        }
     }
 }

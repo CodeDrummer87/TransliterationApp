@@ -21,5 +21,11 @@ namespace TransliterationApp.Controllers
         {
             return buffer.ChooseTransliterationSystem(systemName);
         }
+
+        [HttpPost]
+        public string TryToTranslate([FromBody] string text)
+        {
+            return buffer.TryToTranslateText(text);
+        }
     }
 }

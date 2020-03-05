@@ -8,5 +8,6 @@ namespace TransliterationApp.Modules.Interfaces
     public interface ITranslatorService
     {
         string ChooseTransliterationSystem(string systemName);
+        string TryToTranslateText(string text);
     }
 }
