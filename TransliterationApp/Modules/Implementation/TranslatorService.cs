@@ -33,10 +33,9 @@ namespace TransliterationApp.Modules.Implementation
 
         public string TryToTranslateText(string text)
         {
-            List<string> alphabet = AlphabetLoader.GetCurrentAlphabet();
-            if (text != null && alphabet.Count != 0)
+            if (text != null && AlphabetLoader.alphabet.Count != 0)
             {
-                return Translator.TranslateText(text, alphabet);
+                return Translator.TranslateText(text, AlphabetLoader.alphabet);
             }
             else
                 return "No transliteration system selected";

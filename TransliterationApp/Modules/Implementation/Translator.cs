@@ -8,7 +8,7 @@ namespace TransliterationApp.Modules.Implementation
     public class Cell
     {
         public string ch;
-        public int count;
+        public int length;
     }
 
     public static class Translator
@@ -21,23 +21,27 @@ namespace TransliterationApp.Modules.Implementation
             string ch;
             bool isEqual;
             int currentCount;
+
             for (int i = 0; i < sourceText.Length; i++)
             {
                 ch = String.Empty;
                 isEqual = false;
                 currentCount = 0;
+
                 for (int j = 0; j < complexCharactersList.Count; j++)
                 {
                     if (sourceText[i].ToString() == complexCharactersList[j].ch)
                     {
                         isEqual = true;
-                        currentCount = complexCharactersList[j].count;
+                        currentCount = complexCharactersList[j].length;
                         break;
                     }
                 }
+
                 if (!isEqual)
                 {
-                    ch = sourceText[i].ToString();
+                    string temp = sourceText[i].ToString();
+                    ch = AlphabetLoader.MapCharToHex(temp);
                 }
                 else
                 {
@@ -93,9 +97,9 @@ namespace TransliterationApp.Modules.Implementation
             return translatedText;
         }
 
-        public static string TranslatorChar(string ch)
+        private static string TranslatorChar(string ch)
         {
-            return TranslationSetting.GetTranslatedCharacter(TranslationSetting.GetNumberOfCharacter(ch));
+            return TranslationSetting.GetTranslatedCharacter(ch);
         }
     }
 }

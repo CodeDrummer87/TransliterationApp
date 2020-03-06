@@ -15,6 +15,7 @@ namespace TransliterationApp.Modules.Implementation
         public static void SetCurrentAlphabet(Alphabet currentSystem)
         {
             currentTranslitSystem = currentSystem;
+         
             alphabet.Clear();
 
             CheckForContent(currentSystem.RUS_UPPERCASE_A);
@@ -83,14 +84,63 @@ namespace TransliterationApp.Modules.Implementation
             CheckForContent(currentSystem.RUS_ya);
         }
 
-        private static void CheckForContent(string Ch)
+        private static void CheckForContent(string ch)
         {
-            if(Ch != "")
+            if(ch != "")
             {
-                alphabet.Add(Ch);
+                ch = MapHexToChar(ch);
+                alphabet.Add(ch);
             }
         }
 
-        public static List<string> GetCurrentAlphabet() => alphabet;
+        private static string MapHexToChar(string ch)
+        {
+            return ch switch
+            {
+                "\\u0022" => "\u0022",
+                "\\u0027" => "\u0027",
+                "\\u00CB" => "\u00CB",
+                "\\u00EB" => "\u00EB",
+                "\\u017E" => "\u017E",
+                "\\u010C" => "\u010C",
+                "\\u010D" => "\u010D",
+                "\\u0160" => "\u0160",
+                "\\u0161" => "\u0161",
+                "\\u015C" => "\u015C",
+                "\\u015D" => "\u015D",
+                "\\u00C8" => "\u00C8",
+                "\\u00E8" => "\u00E8",
+                "\\u00DB" => "\u00DB",
+                "\\u00FB" => "\u00FB",
+                "\\u00C2" => "\u00C2",
+                "\\u00E2" => "\u00E2",
+                _ => ch
+            };
+        }
+
+        public static string MapCharToHex(string ch)
+        {
+            return ch switch
+            {
+                "\u0022" => "\\u0022",
+                "\u0027" => "\\u0027",
+                "\u00CB" => "\\u00CB",
+                "\u00EB" => "\\u00EB",
+                "\u017E" => "\\u017E",
+                "\u010C" => "\\u010C",
+                "\u010D" => "\\u010D",
+                "\u0160" => "\\u0160",
+                "\u0161" => "\\u0161",
+                "\u015C" => "\\u015C",
+                "\u015D" => "\\u015D",
+                "\u00C8" => "\\u00C8",
+                "\u00E8" => "\\u00E8",
+                "\u00DB" => "\\u00DB",
+                "\u00FB" => "\\u00FB",
+                "\u00C2" => "\\u00C2",
+                "\u00E2" => "\\u00E2",
+                _ => ch
+            };
+        }
     }
 }
