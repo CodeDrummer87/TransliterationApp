@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TransliterationApp.Modules.Implementation
 {
-    class Cell
+    public class Cell
     {
         public string ch;
         public int count;
@@ -16,39 +16,11 @@ namespace TransliterationApp.Modules.Implementation
         public static string TranslateText(string sourceText, List<string> alphabet)
         {
             string translatedText = String.Empty;
-            bool isSaved = false;           // .:: Flag for checking stored characters
+            List<Cell> complexCharactersList = TranslationSetting.CreateListOfComplexCharacters(alphabet);       
 
-            List<Cell> complexCharactersList = new List<Cell>();
-
-            for (int i = 0; i < alphabet.Count; i++)
-            {
-                isSaved = false;
-                if (alphabet[i].Length > 1)
-                {
-                    for (int j = 0; j < complexCharactersList.Count; j++)
-                    {
-                        if (alphabet[i][0].ToString() == complexCharactersList[j].ch)
-                        {
-                            isSaved = true;
-                            if (alphabet[i].Length > complexCharactersList[j].count)
-                                complexCharactersList[j].count = alphabet[i].Length;
-                        }
-                    }
-                    if (!isSaved)
-                    {
-                        complexCharactersList.Add(new Cell
-                        {
-                            ch = alphabet[i][0].ToString(),
-                            count = alphabet[i].Length
-                        });
-                    }
-                }
-            }
-
-            string ch = String.Empty;
-
-            bool isEqual = false;
-            int currentCount = 0;
+            string ch;
+            bool isEqual;
+            int currentCount;
             for (int i = 0; i < sourceText.Length; i++)
             {
                 ch = String.Empty;
@@ -81,15 +53,20 @@ namespace TransliterationApp.Modules.Implementation
 
                     for (int t = 0; t < currentCount; t++)
                     {
-                        ch += sourceText[i + t].ToString();
+                        try
+                        {
+                            ch += sourceText[i + t].ToString();
+                        }
+                        catch(IndexOutOfRangeException) 
+                        {
+                            //.:: Exception...
+                        }
                     }
 
                     bool isCoincided = false;
 
-                    int x = 0;
                     while (true)
                     {
-                        ++x;
                         for (int q = 0; q < equalList.Count; q++)
                         {
                             if (ch == equalList[q])
@@ -100,55 +77,25 @@ namespace TransliterationApp.Modules.Implementation
                         }
                         if (isCoincided)
                             break;
-                        ch = ch.Substring(0, ch.Length - 1);
+                        try
+                        {
+                            ch = ch.Substring(0, ch.Length - 1);
+                        }
+                        catch(ArgumentOutOfRangeException)
+                        {
+                            // Exception...
+                        }
                     }
                     i += ch.Length - 1;
                 }
                 translatedText += TranslatorChar(ch);
             }
-                return translatedText;
+            return translatedText;
         }
 
         public static string TranslatorChar(string ch)
         {
-            //.:: Temporary method implementation
-            switch (ch)
-            {
-                case "a": return "а";
-                case "b": return "б";
-                case "v": return "в";
-                case "g": return "г";
-                case "d": return "д";
-                case "e": return "е";
-                case "yo": return "ё";
-                case "zh": return "ж";
-                case "z": return "з";
-                case "i": return "и";
-                case "j": return "й";
-                case "k": return "к";
-                case "l": return "л";
-                case "m": return "м";
-                case "n": return "н";
-                case "o": return "о";
-                case "p": return "п";
-                case "r": return "р";
-                case "s": return "с";
-                case "t": return "т";
-                case "u": return "у";
-                case "f": return "ф";
-                case "kh": return "х";
-                case "c": return "ц";
-                case "ch": return "ч";
-                case "sh": return "ш";
-                case "shch": return "щ";
-                case "'": return "ъ";
-                case "y": return "ы";
-                case "\"": return "ь";
-                case "eh": return "э";
-                case "yu": return "ю";
-                case "ya": return "я";
-                default: return ch;
-            }
+            return TranslationSetting.GetTranslatedCharacter(TranslationSetting.GetNumberOfCharacter(ch));
         }
     }
 }

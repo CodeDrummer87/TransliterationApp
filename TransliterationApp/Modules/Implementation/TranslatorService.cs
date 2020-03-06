@@ -39,7 +39,7 @@ namespace TransliterationApp.Modules.Implementation
                 return Translator.TranslateText(text, alphabet);
             }
             else
-                return ".:: No transliteration system selected";
+                return "No transliteration system selected";
         }
     }
 }

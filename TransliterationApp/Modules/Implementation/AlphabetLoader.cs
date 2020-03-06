@@ -9,10 +9,12 @@ namespace TransliterationApp.Modules.Implementation
 {
     public static class AlphabetLoader
     {
+        public static Alphabet currentTranslitSystem = new Alphabet();
         public static List<string> alphabet = new List<string>();
 
         public static void SetCurrentAlphabet(Alphabet currentSystem)
-        { 
+        {
+            currentTranslitSystem = currentSystem;
             alphabet.Clear();
 
             CheckForContent(currentSystem.RUS_UPPERCASE_A);
