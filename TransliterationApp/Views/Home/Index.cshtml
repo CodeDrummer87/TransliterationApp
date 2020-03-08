@@ -255,7 +255,23 @@
         </div>
 
         <div class="pop-up-saveTranslatedText">
-
+            <div class="pop-up-cancel"><span>Cancel</span></div>
+            <h2>Save Translated Text</h2>
+            <input type="text" id="inputTranslatedTextName" placeholder="Save as..." required maxlength="50" /><br />
+            <hr />
+            <input type="text" id="inputPathSavingTranslatedText" value="C:\Users\<userName>\Desktop\" />
+            <br />
+            <div class="left-side">
+                <form>
+                    <b>File type</b>
+                    <p><input name="fileType" type="radio" checked />TXT</p>
+                    <p><input name="fileType" type="radio" />PDF</p>
+                </form>
+            </div>
+            <div class="right-side">
+                <br/>
+                <button id="saveToFile">Save</button>
+            </div>
         </div>
 
         <div class="nap-for-confirm"></div>

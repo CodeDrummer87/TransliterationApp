@@ -37,6 +37,7 @@ namespace TransliterationApp
             services.AddScoped<ISourceTransfer, SourceTransfer>();
             services.AddScoped<ITranslitSystemTransfer, TranslitSystemTransfer>();
             services.AddScoped<ITranslatorService, TranslatorService>();
+            services.AddScoped<ITranslatedTextTransfer, TranslatedTextTransfer>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

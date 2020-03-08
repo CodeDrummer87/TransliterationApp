@@ -178,7 +178,8 @@ button:active {
 }
 
 .pop-up-saveSourceText > input,
-.pop-up-saveSourceText > textarea {
+.pop-up-saveSourceText > textarea,
+.pop-up-saveTranslatedText > input {
     width: 85%;
     background-color: #FFC873;
     outline: none;
@@ -194,12 +195,9 @@ button:active {
     height: 70px;
 }
 
-.pop-up-saveSourceText > hr {
+.pop-up-saveSourceText > hr,
+.pop-up-saveTranslatedText > hr {
     width: 75%;
-}
-
-.pop-up-saveTranslatedText {
-    
 }
 
 .pop-up-sourceList,
@@ -330,6 +328,13 @@ th {
 
 #systemSaveError {
     font-size: 1.3rem;
+}
+
+.left-side,
+.right-side {
+    margin-top: 5%;
+    width: 50%;
+    float: left;
 }
 
 img {
