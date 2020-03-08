@@ -14,10 +14,17 @@ namespace TransliterationApp.Modules.Implementation
         {
             if (data != null)
             {
-                string fileName = data.FileName + ".txt";
-                string path = data.Path + fileName;
-                File.WriteAllText(path, data.TranslatedText);
-                return ".:: Saving text to file was successful";
+                try
+                {
+                    string fileName = data.FileName + ".txt";
+                    string path = data.Path + fileName;
+                    File.WriteAllText(path, data.TranslatedText);
+                    return ".:: Saving text to file was successful";
+                }
+                catch
+                {
+                    return ".:: Invalid save path";
+                }
             }
             else
             {
