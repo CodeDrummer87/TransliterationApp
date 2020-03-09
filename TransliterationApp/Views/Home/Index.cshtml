@@ -257,21 +257,14 @@
         <div class="pop-up-saveTranslatedText">
             <div class="pop-up-cancel"><span>Cancel</span></div>
             <h2>Save Translated Text</h2>
-            <input type="text" id="inputTranslatedTextName" placeholder="Save as..." required maxlength="50" /><br />
+            <input type="text" id="inputTranslatedTextName" placeholder="Save as..." maxlength="50" /><br />
             <hr />
-            <input type="text" id="inputPathSavingTranslatedText" value="C:\Users\<userName>\Desktop\" />
-            <br />
-            <div class="left-side">
-                <form>
-                    <b>File type</b>
-                    <p><input name="fileType" type="radio" checked />TXT</p>
-                    <p><input name="fileType" type="radio" />PDF</p>
-                </form>
-            </div>
-            <div class="right-side">
-                <br/>
-                <button id="saveToFile">Save</button>
-            </div>
+            <h3>
+                <span class="leftSpan" title="Save as TXT file">::::::: TXT ::::::: </span>|
+                <span class="rightSpan" title="Save as PDF file"> ::::::: PDF :::::::</span>
+            </h3>
+            <button id="saveToFile">Save</button>
+            <p id="textNameError"></p>
         </div>
 
         <div class="nap-for-confirm"></div>
@@ -281,7 +274,7 @@
     <footer>
         <hr align="right" width="65%" />
         <hr align="right" width="55%" />
-        <p title="code.drummer87@gmail.com">Andrei Bodrov <img src="~/images/star87.png" /> Omsk-2020</p>
+        <p title="code.drummer87@gmail.com">Andrei Bodrov <img src="~/images/star87.png" alt="star87" /> Omsk-2020</p>
     </footer>
 
     <script src="~/js/main.js"></script>

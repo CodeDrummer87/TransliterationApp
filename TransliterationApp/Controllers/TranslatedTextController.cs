@@ -20,7 +20,7 @@ namespace TransliterationApp.Controllers
         [HttpPost]
         public string SaveAsFileTranslatedText([FromBody]SavingTranslatedText data)
         {
-            return buffer.SaveAsFileText(data);
+            return buffer.SaveAs(data);
         }
     }
 }

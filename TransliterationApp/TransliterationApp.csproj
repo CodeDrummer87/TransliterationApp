@@ -16,6 +16,18 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="itext.io">
+      <HintPath>..\..\iText7-dotnet-7.0.0\itext.io.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.kernel">
+      <HintPath>..\..\iText7-dotnet-7.0.0\itext.kernel.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.layout">
+      <HintPath>..\..\iText7-dotnet-7.0.0\itext.layout.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 
 
 </Project>

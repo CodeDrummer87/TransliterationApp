@@ -72,7 +72,7 @@ button {
     margin: 4px 0;
     height: 1.5rem;
     border-radius: 2px;
-    background-color: #ffa900;
+    background-color: #FFA900;
     color: #000000;
     outline: none;
     border: none;
@@ -83,7 +83,7 @@ button {
 button:hover {
     box-shadow: 0px 0px 7px 3px #FFC873;
     background-color:  #FFC873;
-    color: #d00019;
+    color: #D00019;
 }
 
 button {
@@ -161,10 +161,15 @@ button:active {
     display: none;
 }
 
-.pop-up-saveSourceText,
-.pop-up-saveTranslatedText {
+.pop-up-saveSourceText {
     width: 450px;
     height: 300px;
+    margin: 150px auto 0 auto;
+}
+
+.pop-up-saveTranslatedText {
+    width: 350px;
+    height: 270px;
     margin: 150px auto 0 auto;
 }
 
@@ -189,6 +194,10 @@ button:active {
     font-family: 'Exo 2', sans-serif;
     font-weight: bold;
     font-size: 1.1rem;
+}
+
+.pop-up-saveTranslatedText > input {
+    text-align: center;
 }
 
 .pop-up-saveSourceText > textarea {
@@ -328,13 +337,6 @@ th {
 
 #systemSaveError {
     font-size: 1.3rem;
-}
-
-.left-side,
-.right-side {
-    margin-top: 5%;
-    width: 50%;
-    float: left;
 }
 
 img {
