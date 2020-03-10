@@ -10,7 +10,18 @@ $(document).ready(function () {
     let mainHeight = windowHeight - headerHeight - footerHeight - 50;
     document.querySelector('main').style.height = mainHeight + "px";
 
-    $('body').on('contextmenu', false);
+    var settingsLeft = window.innerWidth - window.innerWidth / 30;
+    var settingsTop = windowHeight / 30;
+    $('#cogwheels').css('left', settingsLeft + "px").css('top', settingsTop + 'px');
+
+    $('body').on('contextmenu', false)
+        .on('mouseenter', '#cogwheels', function () {
+            $(this).attr('src', '/images/cogwheel_hover.png');
+        }).on('mouseout', '#cogwheels', function () {
+            $(this).attr('src', '/images/cogwheel.png');
+        }).on('click', '#cogwheels', function () {
+            ShowNap('.pop-up-settings');
+        });
 
     $('body').on('click', '.nap', function () {
         HideNap();
@@ -51,10 +62,15 @@ function ShowConfirm(state) {
 
 function showMessageForLeftBlock(message, success) {
     if (success) {
-        $('.displayInfo').css('color', '#15D5DD').text(message);
+        if (themeIsDark) {
+            $('.displayInfo').css('color', '#15D5DD').text(message);
+        }
+        else {
+            $('.displayInfo').css('color', '#298A08').text(message);
+        }
     }
     else {
-        $('.displayInfo').css('color', 'RED').text(message);
+        $('.displayInfo').css('color', '#DF0101').text(message);
     }
     sessionStorage.setItem('currentMessage', message);
     sessionStorage.setItem('content', $('#originalText').val());
@@ -62,7 +78,12 @@ function showMessageForLeftBlock(message, success) {
 
 function showMessageForRightBlock(message, success) {
     if (success) {
-        $('.displaySystemInfo').css('color', '#46FF04').text(message);
+        if (themeIsDark) {
+            $('.displaySystemInfo').css('color', '#46FF04').text(message);
+        }
+        else {
+            $('.displaySystemInfo').css('color', '#0000CD').text(message);
+        }
     }
     else {
         $('.displaySystemInfo').css('color', 'RED').text(message);

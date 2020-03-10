@@ -20,6 +20,12 @@ header > p {
     text-align: right;
 }
 
+#cogwheels {
+    position: absolute;
+    width: 2%;
+    height: 2.7%;
+}
+
 button > title {
     background-color: #FFC873;
     border-radius: 0.8%;
@@ -211,7 +217,8 @@ button:active {
 
 .pop-up-sourceList,
 .pop-up-translitSystemList,
-.pop-up-creatingNewSystem {
+.pop-up-creatingNewSystem,
+.pop-up-settings {
     position: fixed;
     top: 0;
     left: 0;
@@ -222,6 +229,21 @@ button:active {
     width: 97%;
     display: none;
     font-size: 1.1rem;
+}
+
+.pop-up-settings {
+    color: #15D5DD;
+    margin-left: 77%;
+    margin-top: 1%;
+    width: 22%;
+}
+
+.pop-up-settings > h4 {
+    color: #0BC119;
+}
+
+.pop-up-settings > hr {
+    width: 75%;
 }
 
 .pop-up-creatingNewSystem {
@@ -339,7 +361,7 @@ th {
     font-size: 1.3rem;
 }
 
-img {
+#star {
     width: 1%;
     height: 1%;
 }
