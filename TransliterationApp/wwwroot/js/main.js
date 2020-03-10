@@ -18,7 +18,12 @@ $(document).ready(function () {
         .on('mouseenter', '#cogwheels', function () {
             $(this).attr('src', '/images/cogwheel_hover.png');
         }).on('mouseout', '#cogwheels', function () {
-            $(this).attr('src', '/images/cogwheel.png');
+            if (themeIsDark) {
+                $(this).attr('src', '/images/cogwheel.png');
+            }
+            else {
+                $(this).attr('src', '/images/cogwheel_black.png');
+            }
         }).on('click', '#cogwheels', function () {
             ShowNap('.pop-up-settings');
         });

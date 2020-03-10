@@ -144,6 +144,9 @@ function SetDarkTheme() {
     $('#translitSystem-table-body').css('color', '#5BBD10');
     ChooseFormat('.leftSpan', '.rightSpan');
     $('.displaySystemInfo').css('color', '#46FF04');
+    $('#star').attr('src', '/images/star87.png');
+    $('#cogwheels').attr('src', '/images/cogwheel.png');
+    $('.pop-up-translitSystemList > img').attr('src', '/images/addNewSystem.png');
 }
 
 function SetLightTheme() {
@@ -167,4 +170,7 @@ function SetLightTheme() {
     $('th, .limit-counter, .pop-up-translitSystemList').css('color', '#3ADF00');
     ChooseFormat('.leftSpan', '.rightSpan');
     $('.displaySystemInfo').css('color', '#0000CD');
+    $('#star').attr('src', '/images/star87_lightTheme.png');
+    $('#cogwheels').attr('src', '/images/cogwheel_black.png');
+    $('.pop-up-translitSystemList > img').attr('src', '/images/addNewSystem_light.png');
 }

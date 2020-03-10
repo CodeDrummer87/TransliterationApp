@@ -58,7 +58,12 @@ $(document).ready(function () {
     }).on('mouseenter', 'img', function () {
         $(this).attr('src', '/images/addNewSystem_hover.png');
     }).on('mouseout', 'img', function () {
-        $(this).attr('src', '/images/addNewSystem.png');
+        if (themeIsDark) {
+            $(this).attr('src', '/images/addNewSystem.png');
+        }
+        else {
+            $(this).attr('src', '/images/addNewSystem_light.png');
+        }
     }).on('click', 'img', function () {
         NapOverNap(true);
         $('#newSystemName').focus();
