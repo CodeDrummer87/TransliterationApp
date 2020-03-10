@@ -1,13 +1,27 @@
 ﻿var formatFileAsPdf = false;
-var themeIsDark = true;
+var themeIsDark;
+
+if (localStorage.getItem('theme') != null) {
+    if (localStorage.getItem('theme') == 'darkTheme') {
+        themeIsDark = true;
+    }
+    else {
+        themeIsDark = false;
+    }
+}
+else {
+    themeIsDark = true;
+}
 
 $(document).ready(function () {
 
     if (themeIsDark) {
         ChooseSetting('#darkTheme', '#lightTheme');
+        GetTheme(themeIsDark);
     }
     else {
         ChooseSetting('#lightTheme', '#darkTheme');
+        GetTheme(themeIsDark);
     }
 
     if (formatFileAsPdf) {
@@ -19,10 +33,12 @@ $(document).ready(function () {
 
     $('.pop-up-settings').on('click', '#darkTheme', function () {
         themeIsDark = true;
+        localStorage.setItem('theme', 'darkTheme');
         ChooseSetting('#darkTheme', '#lightTheme');
         GetTheme(themeIsDark);
     }).on('click', '#lightTheme', function () {
         themeIsDark = false;
+        localStorage.setItem('theme', 'lightTheme');
         ChooseSetting('#lightTheme', '#darkTheme');
         GetTheme(themeIsDark);
     });
