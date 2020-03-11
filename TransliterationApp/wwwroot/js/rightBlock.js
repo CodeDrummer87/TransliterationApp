@@ -1,5 +1,6 @@
 ﻿var formatFileAsPdf = false;
 var themeIsDark;
+var langIsEng;
 
 if (localStorage.getItem('theme') != null) {
     if (localStorage.getItem('theme') == 'darkTheme') {
@@ -11,6 +12,18 @@ if (localStorage.getItem('theme') != null) {
 }
 else {
     themeIsDark = true;
+}
+
+if (localStorage.getItem('language') != null) {
+    if (localStorage.getItem('language') == 'English') {
+        langIsEng = true;
+    }
+    else {
+        langIsEng = false;
+    }
+}
+else {
+    langIsEng = true;
 }
 
 $(document).ready(function () {
@@ -41,6 +54,14 @@ $(document).ready(function () {
         localStorage.setItem('theme', 'lightTheme');
         ChooseSetting('#lightTheme', '#darkTheme');
         GetTheme(themeIsDark);
+    }).on('click', '#engLang', function () {
+        langIsEng = true;
+        localStorage.setItem('language', 'English');
+        ChooseSetting('#engLang', '#rusLang');
+    }).on('click', '#rusLang', function () {
+        langIsEng = false;
+        localStorage.setItem('language', 'Russian');
+        ChooseSetting('#rusLang', '#engLang');
     });
 
     $('.right-block-button').on('click', '#saveTranslatedText', function () {
@@ -48,7 +69,12 @@ $(document).ready(function () {
             ShowNap('.pop-up-saveTranslatedText');
         }
         else {
-            showMessageForLeftBlock(".:: Cannot save empty file", false);
+            if (langIsEng) {
+                showMessageForLeftBlock(".:: Cannot save empty file", false);
+            }
+            else {
+                showMessageForLeftBlock(".:: Нельзя сохранять пустой файл", false);
+            }
         }
     });
 
@@ -59,7 +85,12 @@ $(document).ready(function () {
             $('#textNameError').text('');
         }
         else {
-            $('#textNameError').css('color', 'RED').text("Requiring file name");
+            if (langIsEng) {
+                $('#textNameError').css('color', 'RED').text("Requiring file name");
+            }
+            else {
+                $('#textNameError').css('color', 'RED').text("Требуется имя для файла");
+            }
         }       
     });
 
@@ -88,7 +119,12 @@ function SaveTranslatedText() {
             showMessageForLeftBlock(message, true);
         },
         error: function () {
-            showMessageForLeftBlock(".:: File download request error", false);
+            if (langIsEng) {
+                showMessageForLeftBlock(".:: File download request error", false);
+            }
+            else {
+                showMessageForLeftBlock(".:: Ошибка запроса на сохранение файла", false);
+            }
         }
     });
 }
@@ -105,8 +141,14 @@ function ChooseFormat(active, inactive) {
 }
 
 function ChooseSetting(active, inactive) {
-    $(active).css('color', '#024306').css('background-color', '#7CE1E5').css('box-shadow', '0px 0px 7px 3px #7CE1E5');
-    $(inactive).css('color', '#15D5DD').css('background-color', '#000000').css('box-shadow', 'none');
+    if (themeIsDark) {
+        $(active).css('color', '#024306').css('background-color', '#7CE1E5').css('box-shadow', '0px 0px 7px 3px #7CE1E5');
+        $(inactive).css('color', '#15D5DD').css('background-color', '').css('box-shadow', 'none');
+    }
+    else {
+        $(active).css('color', '#024306').css('background-color', '#90EE90').css('box-shadow', '0px 0px 7px 3px #98FB98');
+        $(inactive).css('color', '#FFFFFF').css('background-color', '').css('box-shadow', 'none');
+    }
 }
 
 function GetTheme(theme) {
@@ -132,7 +174,13 @@ function SetDarkTheme() {
         $(this).css('color', '#000000').css('background-color', '#FFA900').css('box-shadow', 'none');
     });
     $('.left-block').css('border-color', '#FFA900');
-    $('#darkTheme').css('color', '#024306').css('background-color', '#7CE1E5');
+    ChooseSetting('#darkTheme', '#lightTheme');
+    if (langIsEng) {
+        ChooseSetting('#engLang', '#rusLang');
+    }
+    else {
+        ChooseSetting('#rusLang', '#engLang');
+    }
     $('.displayInfo').css('color', '#15D5DD');
     $('.pop-up-saveSourceText, .pop-up-question, .pop-up-saveTranslatedText').css('background-color', '#000000');
     $('.pop-up-sourceList').css('color', '#FFA900');
@@ -162,7 +210,13 @@ function SetLightTheme() {
         $(this).css('color', '#FFFF00').css('background-color', '#04B404').css('box-shadow', 'none');
     });
     $('.left-block').css('border-color', '#000000');
-    $('#darkTheme').css('color', '#FFFFFF').css('background-color', '');
+    ChooseSetting('#lightTheme', '#darkTheme');
+    if (langIsEng) {
+        ChooseSetting('#engLang', '#rusLang');
+    }
+    else {
+        ChooseSetting('#rusLang', '#engLang');
+    }
     $('.displayInfo').css('color', '#298A08');
     $('.pop-up-saveSourceText, .pop-up-question, .pop-up-saveTranslatedText').css('background-color', '#BCF5A9');
     $('.pop-up-sourceList, #translitSystem-table-body').css('color', '#FFFFFF');

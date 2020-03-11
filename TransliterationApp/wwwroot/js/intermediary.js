@@ -29,7 +29,12 @@ $(document).ready(function () {
             ClearInputFields();
         }
         else {
-            $('#systemSaveError').css('color', 'RED').text("Name required for new transliteration system");
+            if (langIsEng) {
+                $('#systemSaveError').css('color', 'RED').text("Name required for new transliteration system");
+            }
+            else {
+                $('#systemSaveError').css('color', 'RED').text("Требуется имя для новой системы транслитерации");
+            }
         }
     });
 
@@ -118,10 +123,20 @@ function GetTranslitSystemList() {
         cache: false,
         success: function (data) {
             DisplayAvailabeTranslitSystems(data);
-            showMessageForLeftBlock(".:: Transliteration systems list uploaded successfully", true);
+            if (langIsEng) {
+                showMessageForLeftBlock(".:: Transliteration systems list uploaded successfully", true);
+            }
+            else {
+                showMessageForLeftBlock(".:: Список систем транслитерации загружен успешно", true);
+            }
         },
         error: function () {
-            showMessageForLeftBlock(".:: Error loading list of available transliteration systems", false);
+            if (langIsEng) {
+                showMessageForLeftBlock(".:: Error loading list of available transliteration systems", false);
+            }
+            else {
+                showMessageForLeftBlock(".:: Ошибка загрузки списка доступных систем транслитерации", false);
+            }
         }
     });
 }
@@ -155,12 +170,22 @@ function DeleteSelectedTransliterationSystem(translitSystem) {
                 window.location = window.location.href = "http://localhost:50860/";
             },
             error: function () {
-                showMessageForLeftBlock(".:: The request failed", false);
+                if (langIsEng) {
+                    showMessageForLeftBlock(".:: Request error", false);
+                }
+                else {
+                    showMessageForLeftBlock(".:: Ошибка запроса", false);
+                }
             }
         });
     }
     else {
-        showMessageForLeftBlock(".:: Error of deleting", false);
+        if (langIsEng) {
+            showMessageForLeftBlock(".:: Error of deleting", false);
+        }
+        else {
+            showMessageForLeftBlock(".:: Ошибка удаления", false);
+        }
     }
 }
 
@@ -178,7 +203,12 @@ function SaveNewTransliterationSystem() {
             showMessageForLeftBlock(message, true);
         },
         error: function () {
-            showMessageForLeftBlock(".:: Server error! New transliteration system has not been saved", false);
+            if (langIsEng) {
+                showMessageForLeftBlock(".:: Request error! New transliteration system has not been saved", false);
+            }
+            else {
+                showMessageForLeftBlock(".:: Ошибка запроса. Новая система транслитерации не сохранилась.", false);
+            }
         }
     });
 }
@@ -212,8 +242,14 @@ function LoadSelectedTransliterationSystem(selectedSystem) {
         },
         error: function () {
             HideNap();
-            showMessageForLeftBlock(".:: Error loading selected transliteration system", false);
-            showMessageForRightBlock(" System not defined", false);
+            if (langIsEng) {
+                showMessageForLeftBlock(".:: Error loading selected transliteration system", false);
+                showMessageForRightBlock(" System not defined", false);
+            }
+            else {
+                showMessageForLeftBlock(".:: Ошибка загрузки выбранной системы транслитерации", false);
+                showMessageForRightBlock(" Система перевода не выбрана", false);
+            }
         }
     });
 }
@@ -229,15 +265,30 @@ function GetTranslate() {
             data: JSON.stringify(text),
             success: function (translatedText) {
                 $('#translatedText').val(translatedText);
-                showMessageForLeftBlock(`.:: Text translated by '${sessionStorage.getItem('currentSystem')}' system`, true);
+                if (langIsEng) {
+                    showMessageForLeftBlock(`.:: Text translated by system '${sessionStorage.getItem('currentSystem')}'`, true);
+                }
+                else {
+                    showMessageForLeftBlock(`.:: Текст переведён системой '${sessionStorage.getItem('currentSystem')}'`, true);
+                }
             },
             error: function () {
-                showMessageForLeftBlock(".:: The request failed", false);
+                if (langIsEng) {
+                    showMessageForLeftBlock(".:: The request failed", false);
+                }
+                else {
+                    showMessageForLeftBlock(".:: Ошибка запроса", false);
+                }
             }
         });
     }
     else {
-        showMessageForLeftBlock(".:: Nothing to translate", false);
+        if (langIsEng) {
+            showMessageForLeftBlock(".:: Nothing to translate", false);
+        }
+        else {
+            showMessageForLeftBlock(".:: Нечего переводить", false);
+        }
         document.querySelector('#originalText').focus();
     }
 }

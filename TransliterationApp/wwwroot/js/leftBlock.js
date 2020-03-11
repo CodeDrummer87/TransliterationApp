@@ -51,12 +51,22 @@ $(document).ready(function () {
                 $('#inputSourceTextDescription').val('');
             }
             else {
-                showMessageForLeftBlock(".:: Name required", false);
+                if (langIsEng) {
+                    showMessageForLeftBlock(".:: Name required", false);
+                }
+                else {
+                    showMessageForLeftBlock(".:: Требуется имя для исходного текста", false);
+                }
                 HideNap();
             }
         }
         else {
-            showMessageForLeftBlock(".:: Nothing to save", false)
+            if (langIsEng) {
+                showMessageForLeftBlock(".:: Nothing to save", false)
+            }
+            else {
+                showMessageForLeftBlock(".:: Нечего сохранять", false);
+            }
             HideNap();
         }
     });
@@ -109,7 +119,12 @@ function LoadSelectedSource(row) {
         },
         error: function () {
             HideNap();
-            showMessageForLeftBlock(".:: Error loading source", false);
+            if (langIsEng) {
+                showMessageForLeftBlock(".:: Error loading source", false);
+            }
+            else {
+                showMessageForLeftBlock(".:: Ошибка загрузки исходного текста", false);
+            }
         }
     });
 }
@@ -128,12 +143,22 @@ function DeleteSelectedSource(textName) {
                 window.location = window.location.href = "http://localhost:50860/";
             },
             error: function () {
-                showMessageForLeftBlock(".:: The request failed", false);
+                if (langIsEng) {
+                    showMessageForLeftBlock(".:: The request failed", false);
+                }
+                else {
+                    showMessageForLeftBlock(".:: Ошибка запроса", false);
+                }
             }
         });
     }
     else {
-        showMessageForLeftBlock(".:: Error of deleting", false);
+        if (langIsEng) {
+            showMessageForLeftBlock(".:: Error of deleting", false);
+        }
+        else {
+            showMessageForLeftBlock(".:: Ошибка удаления", false);
+        }
     }
 }
 
@@ -143,11 +168,21 @@ function LoadSource(text) {
         data = JSON.parse(text);
         $.each(data, function (index, value) {
             $('#originalText').val(value.textContent);
-            showMessageForLeftBlock(`.:: '${value.textName}' uploaded successfully`, true);
+            if (langIsEng) {
+                showMessageForLeftBlock(`.:: '${value.textName}' uploaded successfully`, true);
+            }
+            else {
+                showMessageForLeftBlock(`.:: '${value.textName}' загружен успешно`, true);
+            }
         });
     }
     else {
-        showMessageForLeftBlock(".:: Unable to load source", false);
+        if (langIsEng) {
+            showMessageForLeftBlock(".:: Unable to load source", false);
+        }
+        else {
+            showMessageForLeftBlock(".:: Невозможно загрузить исходный текст", false);
+        }
     }
 }
 
@@ -160,20 +195,45 @@ function SaveSourceTextInDb(text) {
         success: function (response) {
             GetCurrentCounter();
             if (response == 1) {
-                showMessageForLeftBlock(`.:: Text '${text.TextName}' saved successfully`, true);
+                if (langIsEng) {
+                    showMessageForLeftBlock(`.:: Text '${text.TextName}' saved successfully`, true);
+                }
+                else {
+                    showMessageForLeftBlock(`.:: Текст ${text.TextName} успешно сохранён`, true);
+                }
             }
             else if (response == -1) {
-                showMessageForLeftBlock(".:: Text not saved. Storage limit for sources exceeded", false);
+                if (langIsEng) {
+                    showMessageForLeftBlock(".:: Text not saved. Storage limit for sources exceeded", false);
+                }
+                else {
+                    showMessageForLeftBlock(".:: Текст не сохранён. Хранилище исходных текстов переполнено", false);
+                }
             }
             else if (response == -2) {
-                showMessageForLeftBlock(".:: Source with the same name already exists. Enter a unique name", false);
+                if (langIsEng) {
+                    showMessageForLeftBlock(".:: Source with the same name already exists. Enter a unique name", false);
+                }
+                else {
+                    showMessageForLeftBlock(".:: Текст с таким именем уже существует. Создайте уникальное имя", false);
+                }
             }
             else {
-                showMessageForLeftBlock(".:: Save data was not sent", false);
+                if (langIsEng) {
+                    showMessageForLeftBlock(".:: Error sending data", false);
+                }
+                else {
+                    showMessageForLeftBlock(".:: Ошибка при отправке данных", false);
+                }
             }
         },
         error: function () {
-            showMessageForLeftBlock(`.:: Text '${text.TextName}' not saved`, false);
+            if (langIsEng) {
+                showMessageForLeftBlock(`.:: Text '${text.TextName}' not saved`, false);
+            }
+            else {
+                showMessageForLeftBlock(`.:: Текст ${text.TextName} не сохранён`, false);
+            }
         }
     });
     HideNap();
@@ -185,10 +245,20 @@ function GetListSavedSourceTexts() {
         method: "GET",
         success: function (data) {
             DisplaySourceList(data);
-            showMessageForLeftBlock(".:: Source list uploaded", true);
+            if (langIsEng) {
+                showMessageForLeftBlock(".:: Source list uploaded", true);
+            }
+            else {
+                showMessageForLeftBlock(".:: Список исходных текстов загружен", true);
+            }
         },
         error: function () {
-            showMessageForLeftBlock(".:: Error loading source list", false);
+            if (langIsEng) {
+                showMessageForLeftBlock(".:: Error loading source list", false);
+            }
+            else {
+                showMessageForLeftBlock(".:: Ошибка загрузки списка исходных текстов", false);
+            }
         }
     });
 }
@@ -219,7 +289,12 @@ function GetCurrentCounter() {
             sessionStorage.setItem('count', data);
         },
         error: function () {
-            showMessageForLeftBlock(".:: Error loading counter sources", false);
+            if (langIsEng) {
+                showMessageForLeftBlock(".:: Error loading counter sources", false);
+            }
+            else {
+                showMessageForLeftBlock(".:: Ошибка загрузки счётчика исходных текстов", false);
+            }
         }
     });
 }
