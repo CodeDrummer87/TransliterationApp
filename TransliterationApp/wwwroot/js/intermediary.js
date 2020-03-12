@@ -165,6 +165,7 @@ function DeleteSelectedTransliterationSystem(translitSystem) {
             dataType: 'text',
             data: JSON.stringify(translitSystem),
             success: function (response) {
+                ShowConfirm(false);
                 HideNap();
                 if (response == 3) {
                     if (langIsEng) {
@@ -183,23 +184,23 @@ function DeleteSelectedTransliterationSystem(translitSystem) {
                     }
                 }
                 else if (response == 1) {
+                    sessionStorage.setItem('currentSystem', '');
                     if (langIsEng) {
                         showMessageForLeftBlock(`.:: The transliteration system '${translitSystem}' deleted successfully`, true);
                     }
                     else {
                         showMessageForLeftBlock(`.:: Система транслитерации '${translitSystem}' успешно удалена`, true);
                     }
+                    window.location.href = "http://localhost:50860/";
                 }
                 else if (response == 2) {
                     if (langIsEng) {
-                        showMessageForLeftBlock(".:: This transliteration system is protected against deletion", true);
+                        showMessageForLeftBlock(".:: This transliteration system is protected against deletion", false);
                     }
                     else {
-                        showMessageForLeftBlock(".:: Эта система транслитерации защищена от удаления", true);
+                        showMessageForLeftBlock(".:: Эта система транслитерации защищена от удаления", false);
                     }
                 }
-
-                window.location.href = "http://localhost:50860/";
             },
             error: function () {
                 if (langIsEng) {

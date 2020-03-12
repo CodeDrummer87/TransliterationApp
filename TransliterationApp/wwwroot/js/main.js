@@ -306,7 +306,7 @@ function SetHeadersLanguage() {
         headers_h2[3].innerHTML = "Настройка новой Системы Транслитерации";
         headers_h2[4].innerHTML = "Сохранить перевод";
         //.:: h3
-        headers_h3[0].innerHTML = "Удалить";
+        headers_h3[0].innerHTML = "Удалить?";
         //.:: h4
         headers_h4[0].innerHTML = "Тема";
         headers_h4[1].innerHTML = "Язык";

@@ -33,6 +33,9 @@ namespace TransliterationApp.Modules.Implementation
                     {
                         db.Alphabets.Remove(system);
                         db.SaveChanges();
+
+                        AlphabetLoader.alphabet.Clear();
+
                         return 1;
                     }
                     else
