@@ -22,7 +22,7 @@ namespace TransliterationApp.Modules.Implementation
             return db.Alphabets.Where(a => a.SystemId > 0);
         }
 
-        public string DeleteTranslitSystem(string systemName)
+        public int DeleteTranslitSystem(string systemName)
         {
             if (systemName != null)
             {
@@ -33,25 +33,25 @@ namespace TransliterationApp.Modules.Implementation
                     {
                         db.Alphabets.Remove(system);
                         db.SaveChanges();
-                        return $".:: The transliteration system '{systemName}' deleted successfully";
+                        return 1;
                     }
                     else
                     {
-                        return $".:: This transliteration system is protected against deletion";
+                        return 2;
                     }
                 }
                 else
                 {
-                    return ".:: The transliteration system has been deleted previously";
+                    return 3;
                 }
             }
             else
             {
-                return $".:: The transliteration system doesn't exist";
+                return 0;
             }
         }
 
-        public string SaveNewSystem(string[] newSystem)
+        public int SaveNewSystem(string[] newSystem)
         {
             if (newSystem != null)
             {
@@ -65,21 +65,20 @@ namespace TransliterationApp.Modules.Implementation
                         db.Alphabets.Add(system);
                         db.SaveChanges();
 
-                        return $".:: User transliteration system '{system.SystemName}' saved";
+                        return 1;
                     }
                     else
                     {
-                        return ".:: The system not saved because storage is full";
+                        return 2;
                     }
                 }
                 else
                 {
-                    return $".:: A transliteration system named '{newSystem[64]}' already exists";
+                    return 3;
                 }
-                
             }
 
-            return ".:: User transliteration system not defined";
+            return 0;
         }
 
         private Alphabet MappingAlphabetFromStringArray(string[] alphabet)

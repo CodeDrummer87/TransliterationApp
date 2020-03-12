@@ -27,7 +27,12 @@ $(document).ready(function () {
         GetListSavedSourceTexts();
     }).on('click', '#clearOriginalText', function () {
         $('#originalText').val('');
-        showMessageForLeftBlock(".:: Input field cleared", true);
+        if (langIsEng) {
+            showMessageForLeftBlock(".:: Input field cleared", true);
+        }
+        else {
+            showMessageForLeftBlock(".:: Поле ввода очищено", true);
+        }
     }).on('click', '#saveSourceText', function () {
         ShowNap('.pop-up-saveSourceText');
         $('#inputSourceTextName').focus();
@@ -137,10 +142,34 @@ function DeleteSelectedSource(textName) {
             contentType: "application/json",
             dataType: 'text',
             data: JSON.stringify(textName),
-            success: function (message) {
+            success: function (response) {
                 HideNap();
-                showMessageForLeftBlock(message, true);
-                window.location = window.location.href = "http://localhost:50860/";
+                if (response == 0) {
+                    if (langIsEng) {
+                        showMessageForLeftBlock(".:: The source doesn't exist", false);
+                    }
+                    else {
+                        showMessageForLeftBlock(".:: Оригинал не существует", false);
+                    }
+                }
+                else if (response == 1) {
+                    if (langIsEng) {
+                        showMessageForLeftBlock(`.:: Source '${textName}' deleted successfully`, true);
+                    }
+                    else {
+                        showMessageForLeftBlock(`.:: Оригинал '${textName}' успешно удалён`, true);
+                    }
+                }
+                else if (response == 2) {
+                    if (langIsEng) {
+                        showMessageForLeftBlock(".:: Source has been deleted previously", false);
+                    }
+                    else {
+                        showMessageForLeftBlock(".:: Оригинал был удалён ранее", false);
+                    }
+                }
+
+                window.location.href = "http://localhost:50860/";
             },
             error: function () {
                 if (langIsEng) {
@@ -169,10 +198,10 @@ function LoadSource(text) {
         $.each(data, function (index, value) {
             $('#originalText').val(value.textContent);
             if (langIsEng) {
-                showMessageForLeftBlock(`.:: '${value.textName}' uploaded successfully`, true);
+                showMessageForLeftBlock(`.:: '${value.textName}' source uploaded successfully`, true);
             }
             else {
-                showMessageForLeftBlock(`.:: '${value.textName}' загружен успешно`, true);
+                showMessageForLeftBlock(`.:: Оригинал '${value.textName}' загружен успешно`, true);
             }
         });
     }

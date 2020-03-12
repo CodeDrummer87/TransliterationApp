@@ -37,7 +37,7 @@ namespace TransliterationApp.Controllers
         }
 
         [HttpPost]
-        public string DeleteSelectedSource([FromBody] string textName)
+        public int DeleteSelectedSource([FromBody] string textName)
         {
             return buffer.DeleteSource(textName);
         }

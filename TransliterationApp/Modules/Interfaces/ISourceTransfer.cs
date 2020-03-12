@@ -12,7 +12,7 @@ namespace TransliterationApp.Modules.Interfaces
         int TryToSaveSourceInDb(SourceText data);
         IQueryable QueryForSourceList();
         IQueryable GetSourceByName(string textName);
-        string DeleteSource(string textName);
+        int DeleteSource(string textName);
         int GetLimitForSaveSource();
     }
 }

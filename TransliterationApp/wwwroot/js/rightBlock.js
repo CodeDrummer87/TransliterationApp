@@ -57,10 +57,12 @@ $(document).ready(function () {
     }).on('click', '#engLang', function () {
         langIsEng = true;
         localStorage.setItem('language', 'English');
+        SetPageLanguage();
         ChooseSetting('#engLang', '#rusLang');
     }).on('click', '#rusLang', function () {
         langIsEng = false;
         localStorage.setItem('language', 'Russian');
+        SetPageLanguage();
         ChooseSetting('#rusLang', '#engLang');
     });
 
@@ -115,8 +117,31 @@ function SaveTranslatedText() {
         method: "POST",
         contentType: "application/json",
         data: JSON.stringify(translatedData),
-        success: function (message) {
-            showMessageForLeftBlock(message, true);
+        success: function (response) {
+            if (response == 0) {
+                if (langIsEng) {
+                    showMessageForLeftBlock(".:: Save error", false);
+                }
+                else {
+                    showMessageForLeftBlock(".:: Ошибка сохранения", false);
+                }
+            }
+            else if (response == 1) {
+                var file = translatedData.fileName;
+                if (formatFileAsPdf) {
+                    file += ".pdf";
+                }
+                else {
+                    file += ".txt";
+                }
+                if (langIsEng) {
+                    showMessageForLeftBlock(`.:: File '${file}' saved to the desktop`, true);
+                }
+                else {
+                    showMessageForLeftBlock(`.:: Файл '${file}' сохранён на рабочий стол`, true);
+                }
+                $('#inputTranslatedTextName').val('');
+            }
         },
         error: function () {
             if (langIsEng) {

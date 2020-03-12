@@ -18,7 +18,7 @@ namespace TransliterationApp.Controllers
         }
 
         [HttpPost]
-        public string SaveAsFileTranslatedText([FromBody]SavingTranslatedText data)
+        public int SaveAsFileTranslatedText([FromBody]SavingTranslatedText data)
         {
             return buffer.SaveAs(data);
         }

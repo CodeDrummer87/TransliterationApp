@@ -17,7 +17,7 @@ namespace TransliterationApp.Controllers
         }
 
         [HttpPost]
-        public string ChooseThisSystem([FromBody] string systemName)
+        public int ChooseThisSystem([FromBody] string systemName)
         {
             return buffer.ChooseTransliterationSystem(systemName);
         }

@@ -164,10 +164,42 @@ function DeleteSelectedTransliterationSystem(translitSystem) {
             contentType: "application/json",
             dataType: 'text',
             data: JSON.stringify(translitSystem),
-            success: function(message) {
+            success: function (response) {
                 HideNap();
-                showMessageForLeftBlock(message, true);
-                window.location = window.location.href = "http://localhost:50860/";
+                if (response == 3) {
+                    if (langIsEng) {
+                        showMessageForLeftBlock(".:: The transliteration system has been deleted previously", false);
+                    }
+                    else {
+                        showMessageForLeftBlock(".:: Эта система транслитерации была удалена ранее", false);
+                    }
+                }
+                else if (response == 0) {
+                    if (langIsEng) {
+                        showMessageForLeftBlock(".:: The transliteration system doesn't exist", false);
+                    }
+                    else {
+                        showMessageForLeftBlock(".:: Такой системы транслитерации не существует", false);
+                    }
+                }
+                else if (response == 1) {
+                    if (langIsEng) {
+                        showMessageForLeftBlock(`.:: The transliteration system '${translitSystem}' deleted successfully`, true);
+                    }
+                    else {
+                        showMessageForLeftBlock(`.:: Система транслитерации '${translitSystem}' успешно удалена`, true);
+                    }
+                }
+                else if (response == 2) {
+                    if (langIsEng) {
+                        showMessageForLeftBlock(".:: This transliteration system is protected against deletion", true);
+                    }
+                    else {
+                        showMessageForLeftBlock(".:: Эта система транслитерации защищена от удаления", true);
+                    }
+                }
+
+                window.location.href = "http://localhost:50860/";
             },
             error: function () {
                 if (langIsEng) {
@@ -199,8 +231,39 @@ function SaveNewTransliterationSystem() {
         contentType: "application/json",
         dataType: "text",
         data: JSON.stringify(newSystem),
-        success: function (message) {
-            showMessageForLeftBlock(message, true);
+        success: function (response) {
+            if (response == 0) {
+                if (langIsEng) {
+                    showMessageForLeftBlock(".:: User transliteration system not defined", false);
+                }
+                else {
+                    showMessageForLeftBlock(".:: Пользовательская система транслитерации не определена", false);
+                }
+            }
+            else if (response == 1) {
+                if (langIsEng) {
+                    showMessageForLeftBlock(`.:: User transliteration system '${newSystem[64]}' saved`, true);
+                }
+                else {
+                    showMessageForLeftBlock(`.:: Пользовательская система транслитерации '${newSystem[64]}' сохранена`, true);
+                }
+            }
+            else if (response == 2) {
+                if (langIsEng) {
+                    showMessageForLeftBlock(".:: The system not saved because storage is full", false);
+                }
+                else {
+                    showMessageForLeftBlock(".:: Система не сохранена, так как хранилище переполнено", false);
+                }
+            }
+            else if (response == 3) {
+                if (langIsEng) {
+                    showMessageForLeftBlock(`.:: A transliteration system named '${newSystem[64]}' already exists`, false);
+                }
+                else {
+                    showMessageForLeftBlock(`.:: Система транслитерации с именем '${newSystem[64]}' уже существует`, false);
+                }
+            }
         },
         error: function () {
             if (langIsEng) {
@@ -235,9 +298,24 @@ function LoadSelectedTransliterationSystem(selectedSystem) {
         contentType: 'application/json',
         dataType: 'text',
         data: JSON.stringify(systemName),
-        success: function (message) {
+        success: function (response) {
             HideNap();
-            showMessageForLeftBlock(message, true);
+            if (response == 0) {
+                if (langIsEng) {
+                    showMessageForLeftBlock(".:: System not defined", false);
+                }
+                else {
+                    showMessageForLeftBlock(".:: Система не определена", false);
+                }
+            }
+            else if (response == 1) {
+                if (langIsEng) {
+                    showMessageForLeftBlock(`.:: '${systemName}' system selected for translation`, true);
+                }
+                else {
+                    showMessageForLeftBlock(`.:: Система '${systemName}' выбрана для перевода`, true);
+                }
+            }
             showMessageForRightBlock(systemName, true);
         },
         error: function () {
@@ -264,12 +342,24 @@ function GetTranslate() {
             dataType: "text",
             data: JSON.stringify(text),
             success: function (translatedText) {
-                $('#translatedText').val(translatedText);
-                if (langIsEng) {
-                    showMessageForLeftBlock(`.:: Text translated by system '${sessionStorage.getItem('currentSystem')}'`, true);
+                if (translatedText != null) {
+                    $('#translatedText').val(translatedText);
+                    if (langIsEng) {
+                        showMessageForLeftBlock(`.:: Text translated by system '${sessionStorage.getItem('currentSystem')}'`, true);
+                    }
+                    else {
+                        showMessageForLeftBlock(`.:: Текст переведён системой '${sessionStorage.getItem('currentSystem')}'`, true);
+                    }
                 }
                 else {
-                    showMessageForLeftBlock(`.:: Текст переведён системой '${sessionStorage.getItem('currentSystem')}'`, true);
+                    if (langIsEng) {
+                        $('#translatedText').val("No transliteration system selected");
+                        showMessageForLeftBlock(".:: Select a transliteration system", false);
+                    }
+                    else {
+                        $('#translatedText').val("Не выбрана система транслитерации");
+                        showMessageForLeftBlock(".:: Выберите систему перевода", false);
+                    }
                 }
             },
             error: function () {

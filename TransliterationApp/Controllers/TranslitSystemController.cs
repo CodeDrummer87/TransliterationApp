@@ -23,13 +23,13 @@ namespace TransliterationApp.Controllers
         }
 
         [HttpPost]
-        public string DeleteSelectedTranslitSystem([FromBody] string systemName)
+        public int DeleteSelectedTranslitSystem([FromBody] string systemName)
         {
             return buffer.DeleteTranslitSystem(systemName);
         }
 
         [HttpPost]
-        public string SaveNewTransliterationSystem([FromBody] string[] newSystem)
+        public int SaveNewTransliterationSystem([FromBody] string[] newSystem)
         {
             return buffer.SaveNewSystem(newSystem);
         }

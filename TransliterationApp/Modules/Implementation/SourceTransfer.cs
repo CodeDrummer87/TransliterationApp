@@ -65,7 +65,7 @@ namespace TransliterationApp.Modules.Implementation
             }
         }
 
-        public string DeleteSource(string textName)
+        public int DeleteSource(string textName)
         {
             if (textName != null)
             {
@@ -74,16 +74,16 @@ namespace TransliterationApp.Modules.Implementation
                 {
                     db.SourceTexts.Remove(source);
                     db.SaveChanges();
-                    return $".:: Source '{textName}' deleted successfully";
+                    return 1;
                 }
                 else
                 {
-                    return ".:: Source has been deleted previously";
+                    return 2;
                 }
             }
             else
             {
-                return $".:: The source doesn't exist";
+                return 0;
             }
         }
 

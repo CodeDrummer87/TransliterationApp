@@ -8,6 +8,6 @@ namespace TransliterationApp.Modules.Interfaces
 {
     public interface ITranslatedTextTransfer
     {
-        string SaveAs(SavingTranslatedText data);
+        int SaveAs(SavingTranslatedText data);
     }
 }

@@ -17,17 +17,17 @@ namespace TransliterationApp.Modules.Implementation
             db = context;
         }
 
-        public string ChooseTransliterationSystem(string systemName)
+        public int ChooseTransliterationSystem(string systemName)
         {
             Alphabet alphabet = db.Alphabets.FirstOrDefault(a => a.SystemName == systemName);
             if (alphabet != null)
             {
                 AlphabetLoader.SetCurrentAlphabet(alphabet);
-                return $".:: '{systemName}' system selected for translation";
+                return 1;
             }
             else
             {
-                return $".:: System not defined";
+                return 0;
             }
         }
 
@@ -38,7 +38,7 @@ namespace TransliterationApp.Modules.Implementation
                 return Translator.TranslateText(text, AlphabetLoader.alphabet);
             }
             else
-                return "No transliteration system selected";
+                return null;
         }
     }
 }

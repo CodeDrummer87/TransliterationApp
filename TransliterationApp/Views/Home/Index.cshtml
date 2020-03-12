@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="~/css/main.css" />
     <link href="https://fonts.googleapis.com/css?family=Exo+2&display=swap" rel="stylesheet">
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <title>Перевод Транслитерации</title>
+    <title>TRANSLITERATION</title>
 </head>
 
 <body>
@@ -29,7 +29,7 @@
                 <h1>OriginaL</h1>
                 <textarea id="originalText" autofocus></textarea>
                 <button id="loadSavedText">Saved Texts</button>
-                <button id="chooseTranslitSystem">Choose Transliteration System</button>
+                <button id="chooseTranslitSystem">Select Transliteration System</button>
                 <button id="applyTranslitSystem">Apply</button>
                 <button id="clearOriginalText">Clear</button>
                 <button id="saveSourceText">Save Text</button>
@@ -66,7 +66,7 @@
         <div class="pop-up-saveSourceText">
             <div class="pop-up-cancel"><span>Cancel</span></div>
             <h2>Save Source Text</h2>
-            <input type="text" id="inputSourceTextName" placeholder="Save as..." required maxlength="50" /><br/>
+            <input type="text" id="inputSourceTextName" placeholder="Save as..." maxlength="50" /><br/>
             <hr/>
             <textarea placeholder="Description" id="inputSourceTextDescription" maxlength="200" ></textarea><br/>
             <button id="saveSourceTextInDb">Save</button>
@@ -87,12 +87,12 @@
             </table>
             <div class="limit-counter">
                 <h2>Current Limit for Save</h2>
-                <h1 title="Places to save"></h1>
+                <h1></h1>
             </div>
         </div>
 
         <div class="pop-up-translitSystemList">
-            <img src="~/images/addNewSystem.png" alt="addNewSystem" title="Create a new Transliteration System" />
+            <img src="~/images/addNewSystem.png" alt="addNewSystem" />
             <h2>Available Transliteration Systems</h2>
             <hr />
             <table>
@@ -103,7 +103,7 @@
         <div class="pop-up-creatingNewSystem">
             <h2>Setting new Transliteration System</h2>
             <hr />
-            <p>* To save a special character, use the hexadecimal code of this character: \u<span>0000</span></p>
+            <p>* To save a special character, use the hexadecimal code of this character: \u0000</p>
             <br />
             <table>
                 <tr>
@@ -251,7 +251,7 @@
             <br />
             <p>
                 :::::::::::::::::::::::::::::::::::::::::::::::
-                <input type="text" id="newSystemName" placeholder="Enter name for new system" required maxlength="50"/>
+                <input type="text" id="newSystemName" placeholder="Enter name for new system" maxlength="50"/>
                 :::::::::::::::::::::::::::::::::::::::::::::::
             </p>
             <br />
@@ -274,8 +274,8 @@
             <input type="text" id="inputTranslatedTextName" placeholder="Save as..." maxlength="50" /><br />
             <hr />
             <h3>
-                <span class="leftSpan" title="Save as TXT file">::::::: TXT ::::::: </span>|
-                <span class="rightSpan" title="Save as PDF file"> ::::::: PDF :::::::</span>
+                <span class="leftSpan">::::::: TXT ::::::: </span>|
+                <span class="rightSpan"> ::::::: PDF :::::::</span>
             </h3>
             <button id="saveToFile">Save</button>
             <p id="textNameError"></p>
@@ -288,7 +288,7 @@
     <footer>
         <hr align="right" width="65%" />
         <hr align="right" width="55%" />
-        <p> <span title="code.drummer87@gmail.com">Andrei Bodrov</span> <img src="~/images/star87_lightTheme.png" id="star" alt="star87" /> Omsk-2020</p>
+        <p></p>
     </footer>
 
     <script src="~/js/main.js"></script>

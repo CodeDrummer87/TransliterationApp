@@ -14,7 +14,7 @@ namespace TransliterationApp.Modules.Implementation
 {
     public class TranslatedTextTransfer : ITranslatedTextTransfer
     {
-        public string SaveAs(SavingTranslatedText data)
+        public int SaveAs(SavingTranslatedText data)
         {
             if (data.asPdf)
             {
@@ -26,7 +26,7 @@ namespace TransliterationApp.Modules.Implementation
             }
         }
 
-        private string SaveAsFileText(SavingTranslatedText data)
+        private int SaveAsFileText(SavingTranslatedText data)
         {
             try
             {
@@ -35,15 +35,15 @@ namespace TransliterationApp.Modules.Implementation
                 string exportFile = Path.Combine(path, fileName);
                 File.WriteAllText(exportFile, data.TranslatedText);
 
-                return $".:: File '{fileName}' saved to the desktop";
+                return 1;
             }
             catch
             {
-                return ".:: Save error";
+                return 0;
             }
         }
 
-        private string SaveAsFilePdf(SavingTranslatedText data)
+        private int SaveAsFilePdf(SavingTranslatedText data)
         {
             try
             {
@@ -67,11 +67,11 @@ namespace TransliterationApp.Modules.Implementation
                     }
                 }
 
-                return $".:: File '{fileName}' saved to the desktop";
+                return 1;
             }
             catch
             {
-                return ".:: Save error";
+                return 0;
             }
         }
     }
