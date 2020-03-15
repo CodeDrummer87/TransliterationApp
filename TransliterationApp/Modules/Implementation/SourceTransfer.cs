@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,10 +13,12 @@ namespace TransliterationApp.Modules.Implementation
     {
         TransAppContext db;
         private static int sourceLimit = 20;
+        private readonly ILogger<SourceTransfer> logger;
 
-        public SourceTransfer(TransAppContext context)
+        public SourceTransfer(TransAppContext context, ILogger<SourceTransfer> logger)
         {
             db = context;
+            this.logger = logger;
         }
 
         public int TryToSaveSourceInDb(SourceText data)
@@ -35,21 +38,31 @@ namespace TransliterationApp.Modules.Implementation
                             UploadDate = DateTime.Now
                         });
                         db.SaveChanges();
-
+                        logger.LogInformation($">>>> The source text \"{data.TextName}\" is saved in the database");
                         return 1;
                     }
                     else
+                    {
+                        logger.LogWarning($">>>> Unable to save source text \"{data.TextName}\": text with the same name already exists");
                         return -2;
+                    }
                 }
                 else
+                {
+                    logger.LogError(">>> Request Error: no data transferred");
                     return 0;
+                }
             }
             else
+            {
+                logger.LogWarning($">> Unable to save source because storage is full ({currentCounter})");
                 return -1;
+            }
         }
 
         public IQueryable QueryForSourceList()
         {
+            logger.LogInformation(">> Source list uploaded");
             return db.SourceTexts.Select(c => new { c.TextName, c.TextDescription, c.UploadDate });
         }
 
@@ -57,10 +70,12 @@ namespace TransliterationApp.Modules.Implementation
         {
             if (textName != null)
             {
+                logger.LogInformation($">> Source \"{textName}\" uploaded");
                 return db.SourceTexts.Where(source => source.TextName == textName);
             }
             else
             {
+                logger.LogError(">> Request error: source name not received");
                 return null;
             }
         }
@@ -74,15 +89,18 @@ namespace TransliterationApp.Modules.Implementation
                 {
                     db.SourceTexts.Remove(source);
                     db.SaveChanges();
+                    logger.LogInformation($">>> Source \"{textName}\" deleted from the database");
                     return 1;
                 }
                 else
                 {
+                    logger.LogError($">>> The source text \"{textName}\" in the database does not exist");
                     return 2;
                 }
             }
             else
             {
+                logger.LogError(">> Request error: source name not received");
                 return 0;
             }
         }

@@ -1,17 +1,21 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using TransliterationApp.Models.DbSets;
 using TransliterationApp.Modules.Implementation;
 using TransliterationApp.Modules.Interfaces;
+using TransliterationApp.Modules.Logging;
 
 namespace TransliterationApp
 {
@@ -40,17 +44,10 @@ namespace TransliterationApp
             services.AddScoped<ITranslatedTextTransfer, TranslatedTextTransfer>();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
-            }
+            loggerFactory.AddFile(Path.Combine(Directory.GetCurrentDirectory(), "logger.txt"));
+            var logger = loggerFactory.CreateLogger("FileLogger");
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
