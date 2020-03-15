@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,14 +12,17 @@ namespace TransliterationApp.Modules.Implementation
     public class TranslitSystemTransfer : ITranslitSystemTransfer
     {
         TransAppContext db;
+        private readonly ILogger<TranslitSystemTransfer> logger;
 
-        public TranslitSystemTransfer(TransAppContext context)
+        public TranslitSystemTransfer(TransAppContext context, ILogger<TranslitSystemTransfer> logger)
         {
             db = context;
+            this.logger = logger;
         }
 
         public IQueryable QueryForTranslierationSystemsList()
         {
+            logger.LogInformation(">> Available transliteration systems loaded");
             return db.Alphabets.Where(a => a.SystemId > 0);
         }
 
@@ -36,20 +40,24 @@ namespace TransliterationApp.Modules.Implementation
 
                         AlphabetLoader.alphabet.Clear();
 
+                        logger.LogInformation($">>> System \'{systemName}\' removed from the database successfully");
                         return 1;
                     }
                     else
                     {
+                        logger.LogWarning($">>> The transliteration system \'{systemName}\' is protected from deletion");
                         return 2;
                     }
                 }
                 else
                 {
+                    logger.LogError($">>> Transliteration system with name \'{systemName}\' does not exist");
                     return 3;
                 }
             }
             else
             {
+                logger.LogError(">> Error: system name not defined");
                 return 0;
             }
         }
@@ -68,19 +76,23 @@ namespace TransliterationApp.Modules.Implementation
                         db.Alphabets.Add(system);
                         db.SaveChanges();
 
+                        logger.LogInformation($">>>> The transliteration system \'{newSystem[64]}\' is stored in the database");
                         return 1;
                     }
                     else
                     {
+                        logger.LogWarning(">>>> Save Error: transliteration system storage is full");
                         return 2;
                     }
                 }
                 else
                 {
+                    logger.LogWarning($">>> Error: A system named \'{newSystem[64]}\' already exists.");
                     return 3;
                 }
             }
 
+            logger.LogError(">> Request error: new system not defined");
             return 0;
         }
 
