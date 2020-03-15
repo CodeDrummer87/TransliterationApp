@@ -8,20 +8,29 @@ using iText.Kernel.Font;
 using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
-
+using Microsoft.Extensions.Logging;
 
 namespace TransliterationApp.Modules.Implementation
 {
     public class TranslatedTextTransfer : ITranslatedTextTransfer
     {
+        private readonly ILogger<TranslatedTextTransfer> logger;
+
+        public TranslatedTextTransfer(ILogger<TranslatedTextTransfer> logger)
+        {
+            this.logger = logger;
+        }
+
         public int SaveAs(SavingTranslatedText data)
         {
             if (data.asPdf)
             {
+                logger.LogInformation($">> PDF format selected");
                 return SaveAsFilePdf(data);
             }
             else
-            {
+            { 
+                logger.LogInformation($">> TXT format selected");
                 return SaveAsFileText(data);
             }
         }
@@ -34,11 +43,12 @@ namespace TransliterationApp.Modules.Implementation
                 string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                 string exportFile = Path.Combine(path, fileName);
                 File.WriteAllText(exportFile, data.TranslatedText);
-
+                logger.LogInformation($">>> {fileName} saved to your desktop");
                 return 1;
             }
             catch
             {
+                logger.LogError(">>> Error saving file [TXT]");
                 return 0;
             }
         }
@@ -66,11 +76,12 @@ namespace TransliterationApp.Modules.Implementation
                         doc.Add(new Paragraph(data.TranslatedText));
                     }
                 }
-
+                logger.LogInformation($">>> {fileName} saved to your desktop");
                 return 1;
             }
             catch
             {
+                logger.LogError(">>> Error saving file [PDF]");
                 return 0;
             }
         }
