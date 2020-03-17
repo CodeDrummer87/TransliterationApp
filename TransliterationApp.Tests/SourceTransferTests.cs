@@ -1,14 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
-using Moq;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using TransliterationApp.Models;
-using TransliterationApp.Models.DbSets;
-using TransliterationApp.Modules.Implementation;
-using TransliterationApp.Modules.Interfaces;
 using Xunit;
 
 namespace TransliterationApp.Tests
@@ -107,7 +100,7 @@ namespace TransliterationApp.Tests
             string[] sourceNames = { "First", "Second", "Third" };
             for (int i = 0; i < sourceNames.Length; i++)
             {
-                if(data.TextName == sourceNames[i])
+                if (data.TextName == sourceNames[i])
                 {
                     return false;
                 }
@@ -117,9 +110,9 @@ namespace TransliterationApp.Tests
 
         private int TryToSaveSourceInDb(SourceText data)
         {
-            if(data != null)
+            if (data != null)
             {
-                if(CheckForExist(data))
+                if (CheckForExist(data))
                 {
                     return 1;
                 }
@@ -146,7 +139,7 @@ namespace TransliterationApp.Tests
             var result = GetSourceByName(textName);
 
             // Assert
-            Assert.Null(result); 
+            Assert.Null(result);
         }
 
         [Fact]
@@ -174,10 +167,106 @@ namespace TransliterationApp.Tests
 
         List<SourceText> list = new List<SourceText>()
         {
-            new SourceText() { TextName = "First", TextDescription = "first text", TextContent = "first", UploadDate = new DateTime() },
-            new SourceText() { TextName = "Second", TextDescription = "second text", TextContent = "second", UploadDate = new DateTime() },
-            new SourceText() { TextName = "Third", TextDescription = "third text", TextContent = "third", UploadDate = new DateTime() }
+            new SourceText() { TextId = 1, TextName = "First", TextDescription = "first text", TextContent = "first", UploadDate = new DateTime() },
+            new SourceText() { TextId = 2, TextName = "Second", TextDescription = "second text", TextContent = "second", UploadDate = new DateTime() },
+            new SourceText() { TextId = 3, TextName = "Third", TextDescription = "third text", TextContent = "third", UploadDate = new DateTime() }
         };
+        #endregion
+
+        #region DeleteSource
+        [Fact]
+        public void DeleteSource_0Returns_WhenParameterIsNull()
+        {
+            // Arrange
+            string textName = null;
+
+            // Act
+            var result = DeleteSource(textName);
+
+            // Assert
+            var expected = 0;
+            Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void DeleteSource_2Returns_WhenSourceTextNotExists()
+        {
+            // Arrange
+            string textName = "Forth";
+
+            // Act
+            var result = DeleteSource(textName);
+
+            // Assert
+            var expected = 2;
+            Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void DeleteSource_1Returns_WhenSourceTextExists()
+        {
+            // Arrange
+            string textName = "First";
+
+            // Act
+            var result = DeleteSource(textName);
+
+            // Assert
+            var expected = 1;
+            Assert.Equal(expected, result);
+        }
+
+        private int DeleteSource(string text)
+        {
+            if (text != null)
+            {
+                var temp = list.Where(t => t.TextName == text).FirstOrDefault();
+                if (temp != null)
+                    return 1;
+                else
+                    return 2;
+            }
+            else
+                return 0;
+        }
+        #endregion
+
+        #region CheckForExist
+        [Fact]
+        public void CheckForExist_TrueReturns_WhenSourceTextExists()
+        {
+            // Arrange
+            string textName = "First";
+
+            // Act
+            var result = CheckExist(textName);
+
+            // Assert
+            Assert.True(result);
+
+        }
+
+        [Fact]
+        public void CheckForExist_FalseReturns_WhenSourceTextNotExists()
+        {
+            // Arrange
+            string textName = "Forth";
+
+            // Act
+            var result = CheckExist(textName);
+
+            // Assert
+            Assert.False(result);
+            
+        }
+        private bool CheckExist(string text)
+        {
+            var temp = list.FirstOrDefault(t => t.TextName == text);
+            if (temp != null)
+                return true;
+            else
+                return false;
+        }
         #endregion
     }
 }

@@ -1,8 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using TransliterationApp.Models;
 using TransliterationApp.Models.DbSets;
 using TransliterationApp.Modules.Interfaces;
