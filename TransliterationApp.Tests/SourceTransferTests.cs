@@ -1,11 +1,14 @@
 ﻿using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using TransliterationApp.Models;
 using TransliterationApp.Models.DbSets;
 using TransliterationApp.Modules.Implementation;
+using TransliterationApp.Modules.Interfaces;
 using Xunit;
 
 namespace TransliterationApp.Tests
@@ -130,6 +133,51 @@ namespace TransliterationApp.Tests
                 return 0;
             }
         }
+        #endregion
+
+        #region GetSourceByName
+        [Fact]
+        public void GetSourceByName_ReturnsNull_WhenTextNameIsNull()
+        {
+            // Arrange
+            string textName = null;
+
+            // Act
+            var result = GetSourceByName(textName);
+
+            // Assert
+            Assert.Null(result); 
+        }
+
+        [Fact]
+        public void GetSourceByName_ReturnsIQueryable_WhenTextNameNotNull()
+        {
+            // Arrange
+            string textName = "First";
+
+            //Act
+            var result = GetSourceByName(textName);
+
+            // Assert
+            Assert.NotNull(result);
+        }
+
+        private IQueryable GetSourceByName(string textName)
+        {
+            if (textName != null)
+            {
+                return list.Where(t => t.TextName == textName).AsQueryable();
+            }
+            else
+                return null;
+        }
+
+        List<SourceText> list = new List<SourceText>()
+        {
+            new SourceText() { TextName = "First", TextDescription = "first text", TextContent = "first", UploadDate = new DateTime() },
+            new SourceText() { TextName = "Second", TextDescription = "second text", TextContent = "second", UploadDate = new DateTime() },
+            new SourceText() { TextName = "Third", TextDescription = "third text", TextContent = "third", UploadDate = new DateTime() }
+        };
         #endregion
     }
 }

@@ -15,6 +15,10 @@ namespace TransliterationApp.Modules.Implementation
         private static int sourceLimit = 20;
         private readonly ILogger<SourceTransfer> logger;
 
+        public SourceTransfer(TransAppContext context)
+        {
+            db = context;
+        }
         public SourceTransfer(TransAppContext context, ILogger<SourceTransfer> logger)
         {
             db = context;
